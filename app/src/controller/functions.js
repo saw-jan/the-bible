@@ -5,6 +5,40 @@ const path = require('path');
 const ipc = electron.ipcRenderer;
 window.jQuery = window.$ = $;
 
+//import user setting
+const u_setting = path.join(app.getAppPath(), '../', 'lib','config', 'user_config.db');
+let setting = require('knex')({
+    client: 'sqlite3',
+    connection: {
+        filename: u_setting
+    },
+    useNullAsDefault: true
+});
+
+let fSize;
+let supFont;
+setting('settings').select('scriptureFont','supFont','bibleVersion')
+        .then((res) => {
+            for (row of res) {
+                fSize = row.scriptureFont;
+                supFont = row.supFont;
+            }
+            if(fSize<=17){
+                $('#m-minus img').css('opacity',.2);
+            }
+            if(fSize>=29){
+                $('#m-plus img').css('opacity',.2);
+            }
+        });
+//user setting 
+function changeFontSize(tFont,sFont){
+    setting('settings').update({
+        scriptureFont: tFont,
+        supFont: sFont
+    }).then(function (count) {
+       // alert('pass');
+    });
+}
 let book = 1;
 let chapter = 1;
 let verse = 1;
@@ -29,7 +63,6 @@ let copyright='';
         .then((res) => {
             for (row of res) {
                 copyright = row.value;
-                //alert(copyright);
             }
             $('#nepali-scripture').text('');
             $('#nepali-scripture').text('Scripture Text © '+copyright);
@@ -143,12 +176,11 @@ function isNep(number){
         return number.toString();
     }
 }
-let fSize=17;
-let supFont=10;
 function plusFont() {
     fSize+=3
     supFont+=2
     if(fSize>17 && fSize<=29){
+        changeFontSize(fSize,supFont);
         $('#m-plus img').css('opacity',.8);
         $('#m-minus img').css('opacity',.8);
         $('.scripture p').css('fontSize',fSize);
@@ -164,6 +196,7 @@ function minusFont() {
     fSize-=3
     supFont-=2
     if(fSize>=17){
+        changeFontSize(fSize,supFont);
         $('#m-minus img').css('opacity',.8);
         $('#m-plus img').css('opacity',.8);
         $('.scripture p').css('fontSize',fSize);
@@ -178,8 +211,6 @@ function minusFont() {
 $(document).ready(function() {
     $('.scripture p').css('fontSize',fSize);
     $('.scripture sup').css('fontSize',supFont);
-    //disable zoom out
-    $('#m-minus img').css('opacity',.2);
     //font magnify
     $('#m-plus').on('click', function(){
         plusFont();

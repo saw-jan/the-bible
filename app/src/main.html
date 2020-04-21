@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nepali Bible</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="window-tab">
+            <div class="window-title"><span><img src="./img/bible-icon-128.png"></span><span id="title">The Bible</span></div>
+            <div class="bible-v-name"><span class="which-bible"></span></div>
+            <div class="toolbox">
+                <span id="btn-min"><img src="./img/min.png"></span>
+                <span id="btn-max"><img src="./img/max.png"></span>
+                <span class="exit" id="btn-close"><img src="./img/close.png"></span>
+            </div>
+        </div>
+        <div class="wrap-it">
+            <div class="bible-list">
+                <div class="select">
+                    <select class="bible-version" id="slct">
+                        <option value="ESV" selected>ESV</option>
+                        <option value="NNRV">NNRV</option>
+                        <option value="KJV">KJV</option>
+                        <option value="HIND">HIND</option>
+                    </select>
+                </div>
+            </div>
+            <div class="window-panel">
+                <div class="left-panel">
+                    <div class="testament-type">
+                        <span class="old-testament" id="old-testament">Old Testament</span>
+                        <span class="new-testament" id="new-testament">New Testament</span>
+                    </div>
+                    <div class="wrap-book-list">
+                        <div class="book-list">
+                            <ul class="old-books" id="old-books">
+    
+                            </ul>
+                            <ul class="new-books" id="new-books">
+    
+                            </ul>
+                        </div>
+                        <span class="more">...</span>
+                    </div>
+                    
+                </div>
+                <div class="mid-panel">
+                    <div class="chapter">
+                        <span class="header">Chapter</span>
+                        <div class="num-more">
+                            <div id="wrap-scroll-item">
+                                <div class="chapter-numbers" id="chapter-numbers">
+                                </div>
+                            </div>
+                            <span class="more">...</span>
+                        </div>
+                    </div>
+                    <div class="verse">
+                        <span class="header">Verse</span>
+                        <div class="num-more">
+                            <div id="wrap-scroll-item">
+                                <div class="verse-numbers" id="verse-numbers">
+                                </div>
+                            </div>
+                            <span class="more">...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <span id="b-c-v"></span>
+                    <div id="div-scripture">
+                        <div class="scripture" id="scriptures"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <span id="nepali-scripture"></span>
+        </div>
+    </div>
+<script>
+    require('./controller/functions.js')
+    require('./controller/mainController.js')
+</script>
+</body>
+
+</html>

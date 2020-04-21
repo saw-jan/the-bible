@@ -1,0 +1,34 @@
+{
+    "name": "nepalibible",
+    "version": "1.0.0",
+    "description": "Just a simple nepali bible for desktop environment",
+    "author": "Saw-jan Gurung",
+    "license": "MIT",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "dist-win": "electron-builder -w",
+        "postinstall": "install-app-deps",
+        "git-push": "git push -u origin master"
+    },
+    "build": {
+        "asar": true,
+        "appId": "com.kinsae.nepalibible",
+        "productName": "Nepali Bible",
+        "extraResources": "./lib/",
+        "win": {
+            "icon": "build/icon.png"
+        }
+    },
+    "dependencies": {
+        "jquery": "^3.4.1",
+        "knex": "^0.20.10",
+        "sqlite-cipher": "^0.3.6",
+        "sqlite3": "^4.1.1"
+    },
+    "devDependencies": {
+        "electron": "^6.0.12",
+        "electron-builder": "^22.3.2"
+    }
+}

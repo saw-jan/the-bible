@@ -10,6 +10,10 @@
 </head>
 
 <body>
+    <!-- notification box -->
+    <div class="notification">
+        <span id="n-text">Set as Default</span><span id="n-close"><img src="./img/x.png"/></span>
+    </div>
     <div class="container">
         <div class="window-tab">
             <div class="window-title"><span><img src="./img/bible-icon-128.png"></span><span id="title">The Bible</span></div>
@@ -24,12 +28,13 @@
             <div class="bible-list">
                 <div class="select">
                     <select class="bible-version" id="slct">
-                        <option value="ESV" selected>ESV</option>
+                        <option value="ESV">ESV</option>
                         <option value="NNRV">NNRV</option>
                         <option value="KJV">KJV</option>
                         <option value="HIND">HIND</option>
                     </select>
                 </div>
+                <span class="set-default">Set as Default</span>
             </div>
             <div class="window-panel">
                 <div class="left-panel">

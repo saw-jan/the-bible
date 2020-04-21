@@ -24,6 +24,40 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.notification{
+    width:200px;
+    height:20px;
+    background-color: var(--primary-light-color);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    left:76%;
+    top:88%;
+    opacity:.9;
+    display: none;
+}
+#n-text{
+    flex:10;
+    font-size: 14px;
+    color:#eee;
+    margin-left: 10px;
+    letter-spacing: .8px;
+}
+#n-close{
+    flex:1;
+    text-align: center;
+    cursor: pointer;
+    opacity:.8;
+}
+#n-close img{
+    width:15px;
+}
+.notification #n-close:hover{
+    opacity:.5;
+}
 .container {
     width: auto;
     height: 100%;
@@ -160,6 +194,19 @@ select {
       width: 10px;
   }
 
+.set-default{
+    margin-left: 10px;
+    font-size: 10px;
+    color: #888;
+    padding:5px 15px 5px 15px;
+    border-radius: 20px;
+    border:solid 1px #666;
+    cursor: pointer;
+  }
+  .set-default:hover{
+    color: #BBB;
+    border:solid 1px #BBB;
+  }
 /* content panel */
 .window-panel {
     display: grid;

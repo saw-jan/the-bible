@@ -2,42 +2,27 @@ const electron = require('electron');
 const app = require('electron').remote.app;
 const $ = require('jquery');
 const path = require('path');
+const fs = require('fs');
 const ipc = electron.ipcRenderer;
 window.jQuery = window.$ = $;
 
-//import user setting
-const u_setting = path.join(app.getAppPath(), '../', 'lib','config', 'user_config.db');
-let setting = require('knex')({
-    client: 'sqlite3',
-    connection: {
-        filename: u_setting
-    },
-    useNullAsDefault: true
-});
+//read user setting
+const user =  require(path.join(app.getAppPath(), 'src','config','settings.json'));
+let fSize= user.scriptureFont;
+let supFont= user.supFont;
+let bible = user.bibleVersion+".sqlite";
+let bibleCode = user.bibleVersion;
 
-let fSize;
-let supFont;
-setting('settings').select('scriptureFont','supFont','bibleVersion')
-        .then((res) => {
-            for (row of res) {
-                fSize = row.scriptureFont;
-                supFont = row.supFont;
-            }
-            if(fSize<=17){
-                $('#m-minus img').css('opacity',.2);
-            }
-            if(fSize>=29){
-                $('#m-plus img').css('opacity',.2);
-            }
-        });
-//user setting 
-function changeFontSize(tFont,sFont){
-    setting('settings').update({
-        scriptureFont: tFont,
-        supFont: sFont
-    }).then(function (count) {
-       // alert('pass');
-    });
+function setDefault(bVersion, tFont,sFont){
+    const setting_path = path.join(app.getAppPath(), 'src','config','settings.json');
+    let new_sett = { 
+        "scriptureFont":tFont,
+        "supFont":sFont,
+        "bibleVersion": bVersion 
+    }; 
+    fs.writeFile(setting_path, JSON.stringify(new_sett), err => { 
+        if (err) throw err;
+    }); 
 }
 let book = 1;
 let chapter = 1;
@@ -48,8 +33,6 @@ let verseNumbers = document.getElementById('verse-numbers');
 let chapterNumbers = document.getElementById('chapter-numbers');
 
 //database connection
-let bible = $("select.bible-version").children("option:selected").val()+".sqlite";
-$('.which-bible').text('English Standard Version (ESV)');
 let dbPath = path.join(app.getAppPath(), '../', 'lib', bible);
 let knex = require('knex')({
     client: 'sqlite3',
@@ -58,14 +41,16 @@ let knex = require('knex')({
     },
     useNullAsDefault: true
 });
-let copyright='';
-    knex('metadata').select('value').where('key','copyright')
+let meta=[];
+    knex('metadata').select('value')
         .then((res) => {
             for (row of res) {
-                copyright = row.value;
+
+                meta.push(row.value);
             }
             $('#nepali-scripture').text('');
-            $('#nepali-scripture').text('Scripture Text © '+copyright);
+            $('#nepali-scripture').text('Scripture Text © '+meta[2]);
+            $('.which-bible').text(meta[2]+' ('+meta[1]+')');
         });
 //initial bible books load on startup
 document.addEventListener('DOMContentLoaded', function() {
@@ -180,7 +165,6 @@ function plusFont() {
     fSize+=3
     supFont+=2
     if(fSize>17 && fSize<=29){
-        changeFontSize(fSize,supFont);
         $('#m-plus img').css('opacity',.8);
         $('#m-minus img').css('opacity',.8);
         $('.scripture p').css('fontSize',fSize);
@@ -196,7 +180,6 @@ function minusFont() {
     fSize-=3
     supFont-=2
     if(fSize>=17){
-        changeFontSize(fSize,supFont);
         $('#m-minus img').css('opacity',.8);
         $('#m-plus img').css('opacity',.8);
         $('.scripture p').css('fontSize',fSize);
@@ -209,6 +192,13 @@ function minusFont() {
     }
 }
 $(document).ready(function() {
+    
+    if(fSize>=29){
+        $('#m-plus img').css('opacity',.2);
+    }
+    if(fSize<=17){
+        $('#m-minus img').css('opacity',.2);
+    }
     $('.scripture p').css('fontSize',fSize);
     $('.scripture sup').css('fontSize',supFont);
     //font magnify
@@ -219,8 +209,10 @@ $(document).ready(function() {
         minusFont();
     });
     //bible language select
+    let selValue='';
+    $('select.bible-version option[value='+bibleCode+']').attr('selected','selected');
     $("select.bible-version").change(function(){
-        let selValue = $(this).children("option:selected").val();
+        selValue = $(this).children("option:selected").val();
         changeBible(selValue);
         loadBible();
         
@@ -320,5 +312,20 @@ $(document).ready(function() {
         $('html,body, .scripture').animate({
             scrollTop: thisVerse - divTop
         }, 400);
+    });
+
+    //set user defaults
+    $('.set-default').on('click', function(){
+        const curVersion = $("select.bible-version").children("option:selected").val();
+        setDefault(curVersion,fSize,supFont);
+        $('.notification').css('display','flex');
+        $('#n-text').text("'"+selValue+"' Set as Default");
+        setTimeout(function(){
+            $('.notification').css('display','none');
+        }, 3000)
+    });
+    //notification
+    $('#n-close').on('click', function(){
+        $('.notification').css('display','none');
     });
 });

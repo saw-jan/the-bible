@@ -17,6 +17,8 @@
 
 html,
 body {
+    margin: 0px;
+    padding: 0px;
     width: 100%;
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
@@ -90,7 +92,10 @@ body {
 .toolbox .exit:hover {
     background-color: red;
 }
-
+#btn-max{
+    opacity: 0.2;
+    cursor: default;
+}
 /* bible selection panel */
 .wrap-it{
     display: grid;
@@ -285,7 +290,7 @@ select {
     display: flex;
     justify-content: center;
     align-items: center;
-    letter-spacing: .1em;
+    letter-spacing: .08em;
 }
 
 .chapter .header {
@@ -396,27 +401,55 @@ select {
     grid-template-rows: 40px auto;
 }
 /* selected book, chapter and verse */
-#b-c-v {
-    font-size: 16px;
-    font-weight: bold;
+.chap-index{
     display: flex;
-    justify-content: center;
     align-items: center;
     background-color: var(--primary-light-color);
+}
+#b-c-v {
+    flex: 6;
+    font-size: 16px;
+    font-weight: bold;
     color: var(--accent-gold);
+    display: flex;
+    justify-content: center;
+}
+
+.magnify{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 10px;
+}
+.magnify span{
+    text-align: center;
+    width: 14px;
+    font-size: 14px;
+    padding: 4px;
+    margin-right: 5px;
+    background-color: var(--primary-light-color);
+    border: 1px solid #444;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    color: var(--accent-darkgreen);
+}
+.magnify span img{
+    width:10px;
+    opacity: 0.8;
 }
 /* scripture text styles */
 #div-scripture {
-    height: 71vh;
-    padding: 20px;
+    height: 72vh;
 }
 JQ{
     color:red;
 }
 sup {
-    font-size:x-small; 
+    /* font-size:10px;  */
     vertical-align:super;
-    font-weight: bold;
 }
 .intend-txt t {
     margin-left: 10px;
@@ -427,10 +460,13 @@ sup {
     background: var(--accent-lightgreen);
 }
 .scripture {
+    margin: 20px;
     background-color: var(--white-color);
     overflow: auto;
     height: 100%;
     width: auto;
+    margin-top: 10px;
+    margin-right: 15px;
 }
 
 .scripture::-webkit-scrollbar {
@@ -449,7 +485,7 @@ sup {
 .scripture p {
     margin-bottom: 10px;
     line-height: 1.5em;
-    font-size: 17px;
+    /* font-size: 17px; */
 }
 
 .vNum {
@@ -466,14 +502,14 @@ sup {
     color: var(--accent-dim-gold);
     font-size: 10px;
 }
-/* @media only screen and (max-width: 1080px){
+/* @media only screen and (max-width: 950px){
     .book-list{
         height:100vh;
     }
     .chapter-numbers{
         height:100vh;
     }
-    ..verse-numbers{
+    .verse-numbers{
         height:100vh;
     }
 } */

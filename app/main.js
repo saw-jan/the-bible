@@ -1,14 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 let mainWindow;
-
+// maxWidth:900,
+// maxHeight:620,
 function createWindow() {
     //Create the browser window.
     mainWindow = new BrowserWindow({
-        minWidth: 900,
-        minHeight: 620,
-        maxWidth:900,
-        maxHeight:620,
+        width:950,
+        height:630,
+        minWidth: 950,
+        minHeight: 630,
         resizable: false,
         frame: false,
         webPreferences: {

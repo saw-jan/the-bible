@@ -89,6 +89,9 @@ function loadBible(){
                     BCV.innerHTML = row.book_name + " " + isNep(row.chapter) + ": "+isNep(1)+" - " + isNep(tVerse);
                     var thisVerse = document.getElementById('v' + verse.toString()).offsetTop;
                     var divTop = document.getElementById('scriptures').offsetTop;
+                    //maintain text zoom
+                    $('.scripture p').css('fontSize',fSize);
+                    $('.scripture sup').css('fontSize',supFont);
                     //scroll to selected verse
                     $('html,body, .scripture').animate({
                         scrollTop: thisVerse - divTop 
@@ -140,7 +143,50 @@ function isNep(number){
         return number.toString();
     }
 }
+let fSize=17;
+let supFont=10;
+function plusFont() {
+    fSize+=3
+    supFont+=2
+    if(fSize>17 && fSize<=29){
+        $('#m-plus img').css('opacity',.8);
+        $('#m-minus img').css('opacity',.8);
+        $('.scripture p').css('fontSize',fSize);
+        $('.scripture sup').css('fontSize',supFont);
+    }
+    if(fSize>=29){
+        fSize=29;
+        supFont=18;
+        $('#m-plus img').css('opacity',.2);
+    }
+}
+function minusFont() {
+    fSize-=3
+    supFont-=2
+    if(fSize>=17){
+        $('#m-minus img').css('opacity',.8);
+        $('#m-plus img').css('opacity',.8);
+        $('.scripture p').css('fontSize',fSize);
+        $('.scripture sup').css('fontSize',supFont);
+    }
+    if(fSize<=17){
+        fSize=17;
+        supFont=10;
+        $('#m-minus img').css('opacity',.2);
+    }
+}
 $(document).ready(function() {
+    $('.scripture p').css('fontSize',fSize);
+    $('.scripture sup').css('fontSize',supFont);
+    //disable zoom out
+    $('#m-minus img').css('opacity',.2);
+    //font magnify
+    $('#m-plus').on('click', function(){
+        plusFont();
+    });
+    $('#m-minus').on('click', function(){
+        minusFont();
+    });
     //bible language select
     $("select.bible-version").change(function(){
         let selValue = $(this).children("option:selected").val();

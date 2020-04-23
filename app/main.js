@@ -1,8 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 let mainWindow;
-// maxWidth:900,
-// maxHeight:620,
 function createWindow() {
     //Create the browser window.
     mainWindow = new BrowserWindow({

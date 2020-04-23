@@ -1,7 +1,7 @@
 {
-    "name": "nepalibible",
+    "name": "thebible",
     "version": "1.0.0",
-    "description": "Just a simple nepali bible for desktop environment",
+    "description": "Just a simple bible reading application for desktop environment",
     "author": "Saw-jan Gurung",
     "license": "MIT",
     "main": "main.js",
@@ -14,11 +14,21 @@
     },
     "build": {
         "asar": true,
-        "appId": "com.kinsae.nepalibible",
-        "productName": "Nepali Bible",
-        "extraResources": "./lib/",
+        "appId": "com.kinsae.thebible",
+        "productName": "The Bible",
+        "extraResources": ["./lib/","./config/"],
         "win": {
+            "target":"nsis",
             "icon": "build/icon.png"
+        },
+        "nsis":{
+            "oneClick":false,
+            "allowToChangeInstallationDirectory":true,
+            "installerIcon":"build/installerIcon.ico",
+            "uninstallerIcon":"build/uninstallerIcon.ico",
+            "installerSidebar":"build/installerSidebar.bmp",
+            "uninstallerSidebar":"build/uninstallerSidebar.bmp",
+            "deleteAppDataOnUninstall": true
         }
     },
     "dependencies": {

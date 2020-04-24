@@ -501,6 +501,10 @@ select {
 JQ{
     color:red;
 }
+F{
+    color:#888;
+    font-style: italic;
+}
 sup {
     /* font-size:10px;  */
     vertical-align:super;
@@ -508,7 +512,6 @@ sup {
 .intend-txt t {
     margin-left: 10px;
     font-style: italic;
-    font-size: 17px;
 }
 ::selection{
     background: var(--accent-lightgreen);

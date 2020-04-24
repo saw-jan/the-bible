@@ -3,7 +3,7 @@ const app = require('electron').remote.app;
 const $ = require('jquery');
 const path = require('path');
 const fs = require('fs');
-//const sqlite = require('sqlite-cipher');
+let db = require('sqlite-cipher');
 const ipc = electron.ipcRenderer;
 window.jQuery = window.$ = $;
 
@@ -13,7 +13,7 @@ const user =  require(path.join(app.getAppPath(),'../','config','settings.json')
 let scriptureFont= user.scriptureFont;
 let supFont= user.supFont;
 //set bible version from setting file
-let bible = user.bibleVersion+".sqlite";
+let dbBible = user.bibleVersion+".dll";
 let bibleCode = user.bibleVersion;
 //function to set user's default setting
 function setDefault(bVersion, tFont,sFont){
@@ -40,30 +40,53 @@ let verseNumbers = document.getElementById('verse-numbers');
 let chapterNumbers = document.getElementById('chapter-numbers');
 
 //connection to bible data file
-let dbPath = path.join(app.getAppPath(), '../', 'lib', bible);
-let knex = require('knex')({
-    client: 'sqlite3',
-    connection: {
-        filename: dbPath
-    },
-    useNullAsDefault: true
-});
-let meta=[];
-    knex('metadata').select('value')
-        .then((res) => {
-            for (row of res) {
+let dbPath = path.join(app.getAppPath(), '../', 'lib', dbBible);;
+let conn = db.connect(dbPath,'!25Z#Gcs','aes-256-ctr');
 
-                meta.push(row.value);
-            }
-            $('#copyright-scripture').text('');
-            $('#copyright-scripture').text('Scripture Text © '+meta[2]);
-            $('.which-bible').text(meta[2]+' ('+meta[1]+')');
-        });
+function getCopyright(){
+    let meta=[];
+    conn.runAsync("SELECT * FROM metadata", function(rows){
+        for (row of rows) {
+            meta.push(row.value);
+        }
+        $('#copyright-scripture').text('');
+        $('#copyright-scripture').text('Scripture Text © '+meta[2]);
+        $('.which-bible').text(meta[2]+' ('+meta[1]+')');
+    });
+}
 //initial bible books load on startup
 document.addEventListener('DOMContentLoaded', function() {
     loadBible();
 })
-
+function getChapterNumbers(){
+    conn.runAsync("SELECT DISTINCT chapter FROM verses WHERE book_id = ?",[book],function(rows){
+        for (row of rows) {
+            chapterNumbers.innerHTML += "<span id='c" + row.chapter + "'>" + isNep(row.chapter) + "</span>";
+        }
+        $('.chapter-numbers #c'+chapter).addClass("active-c-v");
+    });
+}
+function getVerseNumbers(){
+    conn.runAsync("SELECT verse FROM verses WHERE book_id = ? AND chapter=?",[book,chapter],function(rows){
+        for (row of rows) {
+            verseNumbers.innerHTML += "<span id='ve" + row.verse + "'>" + isNep(row.verse) + "</span>";
+        }
+        $('.verse-numbers #ve'+verse).addClass("active-c-v");
+    });
+}
+function getScripture(){
+    conn.runAsync("SELECT book_name,chapter,verse,scripture FROM verses INNER JOIN books ON verses.book_id=books.book_id WHERE verses.book_id = ? AND chapter=?",[book,chapter],function(rows){
+        let tVerse=0;
+        for (row of rows) {
+            scriptures.innerHTML += "<p id='v" + row.verse + "'><sup>" + isNep(row.verse) + "</sup> <span class='intend-txt'>" + row.scripture + "</span></p>";
+            tVerse = row.verse;
+        }
+        BCV.innerHTML = row.book_name + " " + isNep(row.chapter) + ": "+isNep(1)+" - " + isNep(tVerse);
+        //maintain text size
+        $('.scripture p').css('fontSize',scriptureFont);
+        $('.scripture sup').css('fontSize',supFont);
+    });
+}
 //load bible on change
 function loadBible(){
     BCV.innerHTML = "";
@@ -73,68 +96,42 @@ function loadBible(){
 
     let oldBooks = document.getElementById('old-books');
     oldBooks.innerHTML='';
-    knex('books').where('testament_id', 1).select('id','book_name')
-        .then((rows) => {
-            for (row of rows) {
-                oldBooks.innerHTML += '<li id="b' + row.id + '">' + row.book_name.toString() + '</li>';
-            }
-            $('.book-list ul #b'+book).addClass("active-book");
+    conn.runAsync("SELECT id,book_name FROM books WHERE testament_id = ?",[1],function(rows){
+        for (row of rows) {
+            oldBooks.innerHTML += '<li id="b' + row.id + '">' + row.book_name.toString() + '</li>';
+        }
+        $('.book-list ul #b'+book).addClass("active-book");
     });
     let newBooks = document.getElementById('new-books');
     newBooks.innerHTML='';
-    knex('books').where('testament_id', 2).select('id','book_name')
-        .then((rows) => {
-            for (row of rows) {
-                newBooks.innerHTML += '<li id="b' + row.id + '">' + row.book_name.toString() + '</li>';
-            }
-            $('.book-list ul #b'+book).addClass("active-book");
+    conn.runAsync("SELECT id,book_name FROM books WHERE testament_id = ?",[2],function(rows){
+        for (row of rows) {
+            newBooks.innerHTML += '<li id="b' + row.id + '">' + row.book_name.toString() + '</li>';
+        }
+        $('.book-list ul #b'+book).addClass("active-book");
     });
-    //load default or recent
-    knex('verses').distinct('chapter').where('book_id', book)
-                .then((rows) => {
-                    for (row of rows) {
-                        chapterNumbers.innerHTML += "<span id='c" + row.chapter + "'>" + isNep(row.chapter) + "</span>";
-                    }
-                    $('.chapter-numbers #c'+chapter).addClass("active-c-v");
-                });
-    knex('verses').select('verse').where({ 'book_id': book, 'chapter': chapter })
-                .then((rows) => {
-                    for (row of rows) {
-                        verseNumbers.innerHTML += "<span id='ve" + row.verse + "'>" + isNep(row.verse) + "</span>";
-                    }
-                    $('.verse-numbers #ve'+verse).addClass("active-c-v");
-                });
-    knex.select('book_name', 'chapter', 'verse', 'scripture').from('verses').innerJoin('books','verses.book_id','books.book_id').where({ 'verses.book_id': book, 'chapter': chapter })
-                .then((rows) => {
-                    let tVerse=0;
-                    for (row of rows) {
-                        scriptures.innerHTML += "<p id='v" + row.verse + "'><sup>" + isNep(row.verse) + "</sup> <span class='intend-txt'>" + row.scripture + "</span></p>";
-                        tVerse = row.verse;
-                    }
-                    BCV.innerHTML = row.book_name + " " + isNep(row.chapter) + ": "+isNep(1)+" - " + isNep(tVerse);
-                    var thisVerse = document.getElementById('v' + verse.toString()).offsetTop;
-                    var divTop = document.getElementById('scriptures').offsetTop;
-                    //maintain text zoom
-                    $('.scripture p').css('fontSize',scriptureFont);
-                    $('.scripture sup').css('fontSize',supFont);
-                    //scroll to selected verse
-                    $('html,body, .scripture').animate({
-                        scrollTop: thisVerse - divTop 
-                    }, 400);
-                    });
+
+    getChapterNumbers();
+    getVerseNumbers();
+    getScripture();
+    getCopyright()
+    
+    let vID = 'v' + verse.toString()
+    var thisVerse = document.getElementById(vID).offsetTop;
+    var divTop = document.getElementById('scriptures').offsetTop;
+    //scroll to selected verse
+    $('html,body, .scripture').animate({
+        scrollTop: thisVerse - divTop
+    }, 400);
 }
 //change bible version
 function changeBible(newBible){
-    bible = newBible+".sqlite";
-    dbPath = path.join(app.getAppPath(), '../', 'lib', bible);
-    knex = require('knex')({
-        client: 'sqlite3',
-        connection: {
-            filename: dbPath
-        },
-        useNullAsDefault: true
-    });
+    conn.close();
+    dbBible = newBible+".dll";
+    dbPath = path.join(app.getAppPath(), '../', 'lib', dbBible);
+    conn = db.connect(dbPath,'!25Z#Gcs','aes-256-ctr');
 }
+
 function isNep(number){
     let selValue = $('select.bible-version').children("option:selected").val();
     if(selValue=='NNRV'){
@@ -223,23 +220,12 @@ $(document).ready(function() {
         changeBible(selValue);
         loadBible();
         
-        //copyright text
-        knex('metadata').select('value').where('key','copyright')
-        .then((res) => {
-            for (row of res) {
-                copyright = row.value;
-                $('#copyright-scripture').text('');
-                $('#copyright-scripture').text('Scripture Text © '+copyright);
-                //alert(copyright);
-            }
-        });
-
         if(selValue === 'NNRV' ){
             $('#old-testament').text('पुरानाे करार');
             $('#new-testament').text('नयाँ करार');
             $('.chapter .header').text('अध्याय');
             $('.verse .header').text('पद');
-            $('.which-bible').text('Nepali New Revised Version (NNRV)');
+            // $('.which-bible').text('Nepali New Revised Version (NNRV)');
         }else{
             $('#old-testament').text('Old Testament');
             $('#new-testament').text('New Testament');
@@ -247,11 +233,11 @@ $(document).ready(function() {
             $('.verse .header').text('Verse');
         }
         if(selValue === 'KJV'){
-            $('.which-bible').text('King James Version (KJV)');
+            // $('.which-bible').text('King James Version (KJV)');
         }else if(selValue === 'ESV'){
-            $('.which-bible').text('English Standard Version (ESV)');
+            // $('.which-bible').text('English Standard Version (ESV)');
         }else if(selValue === 'HIND'){
-            $('.which-bible').text('Hindi Holy Bible (HIND)');
+            // $('.which-bible').text('Hindi Holy Bible (HIND)');
         }
     });
     //show selected book chapter numbers
@@ -267,48 +253,31 @@ $(document).ready(function() {
         scripture.innerHTML = "";
         verseNumbers.innerHTML = "";
         chapterNumbers.innerHTML = "";
-        //query 
-        knex('verses').distinct('chapter').where('book_id', book)
-            .then((rows) => {
-                for (row of rows) {
-                    chapterNumbers.innerHTML += "<span id='c" + row.chapter + "'>" + isNep(row.chapter) + "</span>";
-                }
-            });
+
+        getChapterNumbers();
     });
     //show selected chapter verse numbers
     $('.chapter-numbers').on('click', 'span', function(e) {
         e.preventDefault();
         let id = $(this).attr('id');
         chapter = id.toString().substring(1);
-        
+
         $('.chapter-numbers span').removeClass('active-c-v');
         $('.chapter-numbers #' + id).addClass("active-c-v");
 
         BCV.innerHTML = "";
         scripture.innerHTML = "";
         verseNumbers.innerHTML = "";
-        //query 
-        knex('verses').select('verse').where({ 'book_id': book, 'chapter': chapter })
-            .then((rows) => {
-                for (row of rows) {
-                    verseNumbers.innerHTML += "<span id='ve" + row.verse + "'>" + isNep(row.verse) + "</span>";
-                }
-            });
-        knex.select('book_name', 'chapter', 'verse', 'scripture').from('verses').innerJoin('books','verses.book_id','books.book_id').where({ 'verses.book_id': book, 'chapter': chapter })
-            .then((rows) => {
-                let tVerse=0;
-                for (row of rows) {
-                    scriptures.innerHTML += "<p id='v" + row.verse + "'><sup>" + isNep(row.verse) + "</sup> <span class='intend-txt'>" + row.scripture + "</span></p>";
-                    tVerse = row.verse;
-                }
-                BCV.innerHTML = row.book_name + " " + isNep(row.chapter) + ": "+isNep(1)+" - " + isNep(tVerse);
-            });
+
+        getVerseNumbers();
+        getScripture();
     });
     //show selected book scriptures
     $('.verse-numbers').on('click', 'span', function(e) {
         e.preventDefault();
         let id = $(this).attr('id');
         verse = id.toString().substring(2);
+
         $('.verse-numbers span').removeClass('active-c-v');
         $('.verse-numbers #' + id).addClass("active-c-v");
         let vID = 'v' + verse.toString();

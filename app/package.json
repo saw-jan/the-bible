@@ -9,34 +9,38 @@
         "start": "electron .",
         "pack": "electron-builder --dir",
         "dist-win": "electron-builder -w",
-        "postinstall": "install-app-deps",
-        "git-push": "git push -u origin master"
+        "postinstall": "electron-builder install-app-deps",
+        "git-push": "git push -u origin master",
+        "rebuild": "electron-rebuild -f -w sqlite3"
     },
     "build": {
         "asar": true,
         "appId": "com.kinsae.thebible",
         "productName": "TheBible",
-        "extraResources": ["./lib/","./config/"],
+        "extraResources": [
+            "./lib/",
+            "./config/"
+        ],
         "win": {
-            "target":"nsis",
+            "target": "nsis",
             "icon": "build/icon.png",
             "requestedExecutionLevel": "highestAvailable",
-            "publisherName": "KinSae."
+            "publisherName": "KinSae"
         },
-        "nsis":{
-            "artifactName": "$the_bible_setup_v${version}.${ext}",
-            "oneClick":false,
+        "nsis": {
+            "artifactName": "the_bible_setup_v${version}.${ext}",
+            "oneClick": false,
             "perMachine": true,
-            "allowToChangeInstallationDirectory":true,
-            "installerIcon":"build/installerIcon.ico",
-            "uninstallerIcon":"build/uninstallerIcon.ico",
-            "installerSidebar":"build/installerSidebar.bmp",
-            "uninstallerSidebar":"build/uninstallerSidebar.bmp",
+            "allowToChangeInstallationDirectory": true,
+            "installerIcon": "build/installerIcon.ico",
+            "uninstallerIcon": "build/uninstallerIcon.ico",
+            "installerSidebar": "build/installerSidebar.bmp",
+            "uninstallerSidebar": "build/uninstallerSidebar.bmp",
             "deleteAppDataOnUninstall": true,
             "createStartMenuShortcut": true,
             "include": "build/installer.nsh",
             "allowElevation": true,
-            "shortcutName":"The Bible"
+            "shortcutName": "The Bible"
         }
     },
     "dependencies": {
@@ -46,7 +50,8 @@
         "sqlite3": "^4.1.1"
     },
     "devDependencies": {
-        "electron": "^6.0.12",
-        "electron-builder": "^22.3.2"
+        "electron": "^8.0.0",
+        "electron-builder": "^22.5.1",
+        "electron-rebuild": "^1.10.1"
     }
 }

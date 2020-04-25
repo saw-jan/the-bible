@@ -38,7 +38,9 @@ let BCV = document.getElementById('b-c-v');
 let scripture = document.getElementById('scriptures');
 let verseNumbers = document.getElementById('verse-numbers');
 let chapterNumbers = document.getElementById('chapter-numbers');
-
+let allBooks = document.getElementById('all-books');
+let oldBooks = document.getElementById('old-books');
+let newBooks = document.getElementById('new-books');
 //connection to bible data file
 let dbPath = path.join(app.getAppPath(), '../', 'lib', dbBible);;
 let conn = db.connect(dbPath,'!25Z#Gcs','aes-256-ctr');
@@ -57,13 +59,67 @@ function getCopyright(){
 //initial bible books load on startup
 document.addEventListener('DOMContentLoaded', function() {
     loadBible();
+    var allTestament = document.getElementById('all-testament');
+    var oldTestament = document.getElementById('old-testament');
+    var newTestament = document.getElementById('new-testament');
+    allTestament.addEventListener('click', () => {
+        allTestament.style.background = '#2a964e';
+        oldTestament.style.background = '#30323f';
+        newTestament.style.background = '#30323f';
+        allTestament.style.color = '#EEE';
+        oldTestament.style.color = '#EEE';
+        newTestament.style.color = '#EEE';
+        allBooks.style.display = 'block';
+        oldBooks.style.display = 'none';
+        newBooks.style.display = 'none';
+    })
+    oldTestament.addEventListener('click', () => {
+        allTestament.style.background = '#30323f';
+        oldTestament.style.background = '#2a964e';
+        newTestament.style.background = '#30323f';
+        allTestament.style.color = '#EEE';
+        oldTestament.style.color = '#EEE';
+        newTestament.style.color = '#EEE';
+        allBooks.style.display = 'none';
+        oldBooks.style.display = 'block';
+        newBooks.style.display = 'none';
+        //clear cache
+        if(book>39){
+            verseNumbers.style.display = 'none';
+            chapterNumbers.style.display = 'none';
+        }else{
+            verseNumbers.style.display = 'grid';
+            chapterNumbers.style.display = 'grid';
+        }
+    })
+    //on old testament selection
+    newTestament.addEventListener('click', () => {
+        allTestament.style.background = '#30323f';
+        oldTestament.style.background = '#30323f';
+        newTestament.style.background = '#2a964e';
+        allTestament.style.color = '#EEE';
+        oldTestament.style.color = '#EEE';
+        newTestament.style.color = '#EEE';
+        
+        allBooks.style.display = 'none';
+        oldBooks.style.display = 'none';
+        newBooks.style.display = 'block';
+        //clear all cache
+        if(book<40){
+            verseNumbers.style.display = 'none';
+            chapterNumbers.style.display = 'none';
+        }else{
+            verseNumbers.style.display = 'grid';
+            chapterNumbers.style.display = 'grid';
+        }
+})
 })
 function getChapterNumbers(){
     conn.runAsync("SELECT DISTINCT chapter FROM verses WHERE book_id = ?",[book],function(rows){
         for (row of rows) {
             chapterNumbers.innerHTML += "<span id='c" + row.chapter + "'>" + isNep(row.chapter) + "</span>";
         }
-        $('.chapter-numbers #c'+chapter).addClass("active-c-v");
+        // $('.chapter-numbers #c'+chapter).addClass("active-c-v");
     });
 }
 function getVerseNumbers(){
@@ -71,7 +127,7 @@ function getVerseNumbers(){
         for (row of rows) {
             verseNumbers.innerHTML += "<span id='ve" + row.verse + "'>" + isNep(row.verse) + "</span>";
         }
-        $('.verse-numbers #ve'+verse).addClass("active-c-v");
+        // $('.verse-numbers #ve'+verse).addClass("active-c-v");
     });
 }
 function getScripture(){
@@ -94,7 +150,14 @@ function loadBible(){
     verseNumbers.innerHTML = "";
     chapterNumbers.innerHTML = "";
 
-    let oldBooks = document.getElementById('old-books');
+    allBooks.innerHTML='';
+    conn.runAsync("SELECT id,book_name FROM books",function(rows){
+        for (row of rows) {
+            allBooks.innerHTML += '<li id="b' + row.id + '">' + row.book_name.toString() + '</li>';
+        }
+        $('.book-list ul #b'+book).addClass("active-book");
+    });
+    
     oldBooks.innerHTML='';
     conn.runAsync("SELECT id,book_name FROM books WHERE testament_id = ?",[1],function(rows){
         for (row of rows) {
@@ -102,7 +165,7 @@ function loadBible(){
         }
         $('.book-list ul #b'+book).addClass("active-book");
     });
-    let newBooks = document.getElementById('new-books');
+    
     newBooks.innerHTML='';
     conn.runAsync("SELECT id,book_name FROM books WHERE testament_id = ?",[2],function(rows){
         for (row of rows) {
@@ -113,6 +176,8 @@ function loadBible(){
 
     getChapterNumbers();
     getVerseNumbers();
+    $('.chapter-numbers #c'+chapter).addClass("active-c-v");
+    $('.verse-numbers #ve'+verse).addClass("active-c-v");
     getScripture();
     getCopyright()
     
@@ -248,12 +313,15 @@ $(document).ready(function() {
 
         $('.book-list ul li').removeClass('active-book');
         $('.book-list ul #' + id).addClass("active-book");
+        $('.chapter-numbers span').removeClass("active-c-v");
+        $('.verse-numbers span').removeClass("active-c-v");
 
         BCV.innerHTML = "";
         scripture.innerHTML = "";
         verseNumbers.innerHTML = "";
         chapterNumbers.innerHTML = "";
-
+        verseNumbers.style.display = 'grid';
+        chapterNumbers.style.display = 'grid';
         getChapterNumbers();
     });
     //show selected chapter verse numbers

@@ -161,7 +161,7 @@ select {
   .select {
     position: relative;
     display: flex;
-    width: 200px;
+    width: 208px;
     height: 30px;
     line-height: 2;
     background: var(--primary-color);
@@ -216,7 +216,7 @@ select {
 /* content panel */
 .window-panel {
     display: grid;
-    grid-template-columns: 170px 150px auto;
+    grid-template-columns: 200px 150px auto;
     height: 100px;
     width: 100%;
 }
@@ -249,9 +249,8 @@ select {
     color: #EEE;
     letter-spacing: .05em;
 }
-
-.old-testament {
-    width: 100%;
+.all-testament{
+    width: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -262,10 +261,9 @@ select {
     color: #EEE;
     background-color: var(--accent-darkgreen);
 }
-
-.new-testament {
-    background-color: var(--primary-light-color);
+.old-testament {
     width: 100%;
+    background-color: var(--primary-light-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -273,6 +271,22 @@ select {
     padding-left: 8px;
     padding-right: 8px;
     cursor: pointer;
+    font-size: 11px;
+    border-left: solid 1px var(--primary-extralight-color);
+}
+
+.new-testament {
+    width: 100%;
+    background-color: var(--primary-light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    cursor: pointer;
+    font-size: 11px;
+    border-left: solid 1px var(--primary-extralight-color);
 }
 .wrap-book-list{
     display: flex;
@@ -322,9 +336,12 @@ select {
     background-color: #e1ffee;
     cursor: pointer;
 }
+.all-books{
+    display: block;
+}
 
 .old-books {
-    display: block;
+    display: none;
 }
 
 .new-books {

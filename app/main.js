@@ -16,7 +16,7 @@ app.on('ready', () => {
         show: false,
         webPreferences: {
             nodeIntegration: true,
-            devTools: true
+            devTools: false
         }
     });
     mainWindow.loadFile('src/main.html');

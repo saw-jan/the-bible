@@ -72,7 +72,7 @@ autoUpdater.on('update-available',()=>{
 });
 autoUpdater.on('error', (err) => {
   mainWindow.webContents.send('Update error: ' + err);
-})
+});
 autoUpdater.on('update-downloaded', () => {
   mainWindow.webContents.send('update-downloaded');
 });

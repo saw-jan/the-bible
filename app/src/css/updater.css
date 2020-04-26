@@ -13,7 +13,7 @@
     opacity:.9;
     color:#FFF;
     font-size: 13px;
-    display: none;
+    /* display: none; */
 }
 .update .buttons{
     display: flex;
@@ -36,6 +36,22 @@ input[type="button"]:hover{
 .update #btn-later{
     background-color: #15181f;
     margin-left: 20px;
+}
+.downloading{
+    width:150px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    left:84%;
+    top:92.9%;
+    opacity:1;
+    color:var(--primary-light-color);
+    font-size: 10px;
+    /* display: none; */
 }
 .d-complete{
     width:250px;

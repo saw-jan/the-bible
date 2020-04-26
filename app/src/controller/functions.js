@@ -364,14 +364,14 @@ $(document).ready(function() {
     $('.set-default').on('click', function(){
         const curVersion = $("select.bible-version").children("option:selected").val();
         setDefault(curVersion,scriptureFont,supFont);
-        $('.notification').css('display','flex');
+        $('.notification').css('display','flex').hide().fadeIn();
         $('#n-text').text("'"+curVersion+"' Set as Default");
         setTimeout(function(){
-            $('.notification').css('display','none');
+            $('.notification').fadeOut();
         }, 3000)
     });
     //notification
     $('#n-close').on('click', function(){
-        $('.notification').css('display','none');
+        $('.notification').fadeOut();
     });
 });

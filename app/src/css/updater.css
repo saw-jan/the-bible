@@ -13,7 +13,7 @@
     opacity:.9;
     color:#FFF;
     font-size: 13px;
-    /* display: none; */
+    display: none;
 }
 .update .buttons{
     display: flex;
@@ -51,7 +51,7 @@ input[type="button"]:hover{
     opacity:1;
     color:var(--primary-light-color);
     font-size: 10px;
-    /* display: none; */
+    display: none;
 }
 .d-complete{
     width:250px;

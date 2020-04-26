@@ -16,7 +16,7 @@ app.on('ready', () => {
         show: false,
         webPreferences: {
             nodeIntegration: true,
-            devTools: false
+            devTools: true
         }
     });
     mainWindow.loadFile('src/main.html');
@@ -40,7 +40,7 @@ app.on('ready', () => {
     mainWindow.once('ready-to-show', () => {
         loadingWindow.destroy();
         mainWindow.show();
-        autoUpdater.checkForUpdates();
+        autoUpdater.checkForUpdatesAndNotify();
     });
 });
 
@@ -67,12 +67,18 @@ autoUpdater.setFeedURL({
     token: '8470bf6d0f4167849f4901060de66a49d32dc8f0'
 });
 autoUpdater.autoDownload = false;
+// autoUpdater.on('update-not-available',()=>{
+//     alert('available');
+// });
 autoUpdater.on('update-available',()=>{
     mainWindow.webContents.send('update-available');
 });
 autoUpdater.on('error', (err) => {
   mainWindow.webContents.send('Update error: ' + err);
 });
+autoUpdater.on('error', (err) => {
+  alert('Error in auto-updater. ' + err);
+})
 autoUpdater.on('update-downloaded', () => {
   mainWindow.webContents.send('update-downloaded');
 });

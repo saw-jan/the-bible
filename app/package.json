@@ -1,6 +1,6 @@
 {
     "name": "thebible",
-    "version": "2.5.5",
+    "version": "2.5.6",
     "description": "Just a simple bible reading application for desktop environment",
     "author": "KinSae",
     "license": "MIT",
@@ -13,6 +13,7 @@
         "git-push": "git push -u origin master",
         "rebuild": "electron-rebuild -f -w sqlite3",
         "deploy": "electron-builder build --win --publish always",
+        "deploy-only":"electron-builder --publish always",
         "build-all":"electron-builder build --mac --win"
     },
     "repository": {

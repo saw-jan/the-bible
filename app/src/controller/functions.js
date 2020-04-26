@@ -72,6 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
         allBooks.style.display = 'block';
         oldBooks.style.display = 'none';
         newBooks.style.display = 'none';
+        verseNumbers.style.display = 'grid';
+        chapterNumbers.style.display = 'grid';
     })
     oldTestament.addEventListener('click', () => {
         allTestament.style.background = '#30323f';

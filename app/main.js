@@ -1,29 +1,8 @@
 const { app, BrowserWindow, ipcMain, session } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 let mainWindow;
 let loadingWindow;
-//main window
-// function createWindow() {
-//     //Create the browser window.
-//     mainWindow = new BrowserWindow({
-//         width:950,
-//         height:630,
-//         minWidth: 950,
-//         minHeight: 630,
-//         resizable: false,
-//         frame: false,
-//         webPreferences: {
-//             nodeIntegration: true,
-//             devTools: true
-//         }
-//     });
-//     mainWindow.loadFile('src/main.html');
-//     //dev tools
-//     //mainWindow.webContents.openDevTools();
-//     mainWindow.on('closed', () => {
-//         mainWindow = null
-//     });
-// }
 app.on('ready', () => {
     //createWindow();
     mainWindow = new BrowserWindow({
@@ -37,7 +16,7 @@ app.on('ready', () => {
         show: false,
         webPreferences: {
             nodeIntegration: true,
-            devTools: false
+            devTools: true
         }
     });
     mainWindow.loadFile('src/main.html');
@@ -61,6 +40,7 @@ app.on('ready', () => {
     mainWindow.once('ready-to-show', () => {
         loadingWindow.destroy();
         mainWindow.show();
+        autoUpdater.checkForUpdates();
     });
 });
 
@@ -78,4 +58,20 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
+});
+autoUpdater.autoDownload = false;
+autoUpdater.on('update-available',()=>{
+    mainWindow.webContents.send('update-available');
+});
+autoUpdater.on('error', (err) => {
+  mainWindow.webContents.send('Update error: ' + err);
+})
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update-downloaded');
+});
+ipcMain.on('install-update', () => {
+  autoUpdater.downloadUpdate();
+});
+ipcMain.on('restart-and-update', () => {
+  autoUpdater.quitAndInstall();
 });

@@ -7,12 +7,26 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/updater.css">
 </head>
 
 <body>
     <!-- notification box -->
     <div class="notification">
         <span id="n-text">Set as Default</span><span id="n-close"><img src="./img/x.png"/></span>
+    </div>
+    <div class="update" id="update">
+        <span>Update Available <span id="new-version"></span></span>
+        <div class="buttons">
+            <input type="button" value="Install" id="btn-install">
+            <input type="button" value="Later" id="btn-later">
+        </div>
+    </div>
+    <div class="d-complete" id="d-complete">
+        <span>Restart & Install Update <span id="new-version"></span></span>
+        <div class="buttons">
+            <input type="button" value="Restart Now" id="btn-restart">
+        </div>
     </div>
     <div class="container">
         <div class="window-tab">
@@ -99,6 +113,7 @@
 <script>
     require('./controller/functions.js')
     require('./controller/mainController.js')
+    require('./controller/updater.js')
 </script>
 </body>
 

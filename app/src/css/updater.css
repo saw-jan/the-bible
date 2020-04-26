@@ -1,0 +1,65 @@
+.update{
+    width:200px;
+    background-color: var(--primary-light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    left:76%;
+    top:83.5%;
+    opacity:.9;
+    color:#FFF;
+    font-size: 13px;
+    /* display: none; */
+}
+.update .buttons{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+input[type="button"]{
+    background-color: rgb(22, 82, 82);
+    border:none;
+    color:#EEE;
+    padding:5px 15px 5px 15px;
+    cursor: pointer;
+    letter-spacing: .5px;
+    user-select: none;
+    outline: none;
+}
+input[type="button"]:hover{
+    opacity: 0.5;
+}
+.update #btn-later{
+    background-color: #15181f;
+    margin-left: 20px;
+}
+.d-complete{
+    width:250px;
+    background-color: var(--primary-light-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    left:71%;
+    top:87.5%;
+    opacity:.9;
+    color:#FFF;
+    font-size: 13px;
+    display: none;
+}
+.d-complete .buttons{
+    justify-content: center;
+}
+#btn-restart{
+    background-color: rgb(22, 82, 82);
+    padding-left: 10px;
+    padding-right: 10px;
+}

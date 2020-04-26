@@ -1,6 +1,6 @@
 {
     "name": "thebible",
-    "version": "2.4.2",
+    "version": "2.5.3",
     "description": "Just a simple bible reading application for desktop environment",
     "author": "KinSae",
     "license": "MIT",
@@ -11,8 +11,14 @@
         "dist-win": "electron-builder -w",
         "postinstall": "electron-builder install-app-deps",
         "git-push": "git push -u origin master",
-        "rebuild": "electron-rebuild -f -w sqlite3"
+        "rebuild": "electron-rebuild -f -w sqlite3",
+        "deploy": "electron-builder build --win --publish always",
+        "build-all":"electron-builder build --mac --win"
     },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/saw-jan/the-bible.git"
+      },
     "build": {
         "asar": true,
         "appId": "com.kinsae.thebible",
@@ -41,9 +47,15 @@
             "include": "build/installer.nsh",
             "allowElevation": true,
             "shortcutName": "The Bible"
-        }
+        },
+        "publish": [{
+            "provider": "github",
+            "owner": "saw-jan",
+            "repo": "the-bible"
+        }]
     },
     "dependencies": {
+        "electron-updater": "^4.2.5",
         "jquery": "^3.4.1",
         "knex": "^0.20.10",
         "sqlite-cipher": "^0.3.6",

@@ -59,6 +59,13 @@ app.on('activate', () => {
         createWindow();
     }
 });
+autoUpdater.setFeedURL({
+    provider: 'github',
+    repo: 'the-bible',
+    owner: 'saw-jan',
+    private: true,
+    token: '8470bf6d0f4167849f4901060de66a49d32dc8f0'
+});
 autoUpdater.autoDownload = false;
 autoUpdater.on('update-available',()=>{
     mainWindow.webContents.send('update-available');

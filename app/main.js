@@ -1,5 +1,7 @@
 const { app, BrowserWindow, ipcMain, session } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const process = require('process');
+const fs = require('fs');
 const path = require('path');
 let mainWindow;
 let loadingWindow;
@@ -40,10 +42,11 @@ app.on('ready', () => {
     mainWindow.once('ready-to-show', () => {
         loadingWindow.destroy();
         mainWindow.show();
-        autoUpdater.checkForUpdatesAndNotify();
+        // autoUpdater.checkForUpdatesAndNotify();
     });
+    checkUpdateFiles();
+    autoUpdater.checkForUpdates();
 });
-
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
@@ -59,6 +62,9 @@ app.on('activate', () => {
         createWindow();
     }
 });
+// app.on('ready', function()  {
+//   autoUpdater.checkForUpdates();
+// });
 autoUpdater.setFeedURL({
     provider: 'github',
     repo: 'the-bible',
@@ -67,24 +73,39 @@ autoUpdater.setFeedURL({
     token: '8470bf6d0f4167849f4901060de66a49d32dc8f0'
 });
 autoUpdater.autoDownload = false;
-// autoUpdater.on('update-not-available',()=>{
-//     alert('available');
+autoUpdater.on('update-available',(updateInfo)=>{
+    mainWindow.webContents.send('update-available',updateInfo);
+});
+autoUpdater.on('error', (err) => {
+mainWindow.webContents.send('error',err);
+});
+//check if previous update files exist and delete them
+function checkUpdateFiles(){
+    let updatePath = '';
+    if (process.platform === 'darwin') {
+        updatePath = 'C:/Users/KinSae/Downloads/the-bible-update.exe';
+    }else if(process.platform === 'linux'){
+        updatePath = 'C:/Users/KinSae/Downloads/update.exe';
+    }else if(process.platform === 'win32'){
+        updatePath = 'C:/Users/KinSae/Downloads/the-bible-update.exe';
+    }
+    try {
+        fs.unlinkSync(updatePath);
+    //file removed
+    } catch(err) {
+        console.error('No update cache')
+    }
+}
+// autoUpdater.on('update-downloaded', () => {
+//   mainWindow.webContents.send('update-downloaded');
 // });
-autoUpdater.on('update-available',()=>{
-    mainWindow.webContents.send('update-available');
-});
-autoUpdater.on('error', (err) => {
-  mainWindow.webContents.send('Update error: ' + err);
-});
-autoUpdater.on('error', (err) => {
-  alert('Error in auto-updater. ' + err);
-})
-autoUpdater.on('update-downloaded', () => {
-  mainWindow.webContents.send('update-downloaded');
-});
-ipcMain.on('install-update', () => {
-  autoUpdater.downloadUpdate();
-});
-ipcMain.on('restart-and-update', () => {
-  autoUpdater.quitAndInstall();
-});
+// ipcMain.on('install-update', () => {
+//   autoUpdater.downloadUpdate();
+// });
+// ipcMain.on('restart-and-update', () => {
+//   autoUpdater.quitAndInstall();
+// });
+// autoUpdater.on('download-progress', (progressObj) => {
+//     mainWindow.webContents.send('downloading',progressObj.percent);
+//     //console.log('downloading:'+progressObj.bytesPerSecond+', Percent: '+progressObj.percent);
+// })

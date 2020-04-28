@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Nepali Bible</title>
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/updater.css">
@@ -23,7 +23,10 @@
         </div>
     </div>
     <div class="downloading" id="downloading">
-        <span>Downloading Updates <span id="progress-dot"></span></span>
+        <span>Downloading Updates <span id="progress-dot"></span><span id="d-percentage"></span></span>
+    </div>
+    <div class="dError" id="dError">
+        <span>Download Error!</span>
     </div>
     <div class="d-complete" id="d-complete">
         <span>Restart & Install Update</span>

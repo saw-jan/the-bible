@@ -1,6 +1,6 @@
 {
     "name": "thebible",
-    "version": "2.5.5",
+    "version": "1.0.0",
     "description": "Just a simple bible reading application for desktop environment",
     "author": "KinSae",
     "license": "MIT",
@@ -52,10 +52,8 @@
         "publish": [
             {
                 "provider": "github",
-                "private": true,
                 "owner": "saw-jan",
-                "repo": "the-bible",
-                "token": "8470bf6d0f4167849f4901060de66a49d32dc8f0"
+                "repo": "thebible-releases"
             }
         ]
     },

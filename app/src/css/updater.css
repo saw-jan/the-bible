@@ -13,7 +13,7 @@
     opacity:.9;
     color:#FFF;
     font-size: 13px;
-    display: none;
+    /* display: none; */
     user-select: none;
 }
 .update .buttons{
@@ -71,7 +71,7 @@ input[type="button"]:hover{
     opacity:.9;
     color:#FFF;
     font-size: 13px;
-    /* display: none; */
+    display: none;
     user-select: none;
 }
 .d-complete .buttons{

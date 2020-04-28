@@ -2,7 +2,7 @@ const { remote, ipcRenderer } = require('electron');
 const fs = require('fs');
 const fetch = require('node-fetch');
 const process = require('process');
-var run = require('child_process').execFile;
+const { exec } = require('child_process');
 const $ = require('jquery');
 window.jQuery = window.$ = $;
 
@@ -11,34 +11,15 @@ var installer = document.getElementById('d-complete');
 var downloading = document.getElementById('downloading');
 var progress = document.getElementById('progress-dot');
 var dPercentage = document.getElementById('d-percentage');
-
+let updateVersion='';
 let isUpdate = false;
 //update available for download
 ipcRenderer.on('update-available', function(event,info) {
     isUpdate = true;
+    updateVersion = info.version;
     $('#new-version').text(" v"+info.version);
     $('#update').css('display','flex').hide().fadeIn();
 });
-//download completed
-// ipcRenderer.on('update-downloaded', function(event) {
-//     downloading.style.display = 'none';
-//     $('#d-complete').css('display','flex').hide().fadeIn();
-// });
-//downloading updates from server
-// ipcRenderer.on('downloading', function(event, progress) {
-//     isUpdate = true;
-//     progress.innerText +=" ("+progress+")";
-// });
-//catch error
-// ipcRenderer.on('error', function(event, error) {
-//     if(isUpdate){
-//         downloading.style.display = 'none';
-//         $('#dError').css('display','flex').hide().fadeIn();
-//         setTimeout(function(){
-//             $('#dError').fadeOut();
-//         }, 10000);
-//     }
-// });
 function progressDot(){
     let count = 0;
     setInterval(function(){ 
@@ -55,9 +36,10 @@ function progressDot(){
 async function downloadUpdate(){
     var received_mb = 0;
     var total_mb = 0;
-
-    fetch("https://homepages.cae.wisc.edu/~ece533/images/fruits.png")
+    updateURL = "https://github.com/saw-jan/thebible-releases/releases/latest/download/the_bible_setup_v"+updateVersion+".exe";
+    fetch(updateURL)
     .then(res=>{
+        //check OS
         const destPath = fs.createWriteStream("C:/Users/KinSae/Downloads/the-bible-update.exe");
         res.body.pipe(destPath);
         // console.log(res.headers.get('content-length'));
@@ -84,20 +66,21 @@ function showProgress(received, total){
 }
 //exit and install update
 function installUpdate(){
-    var executablePath ='';
+    let executablePath ='';
+    const userPath = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
     if (process.platform === 'darwin') {
-        executablePath = 'C:\\Users/KinSae/Downloads/the-bible-update.exe';
+        executablePath = userPath+'\\Downloads\\the-bible-update.exe';
     }else if(process.platform === 'linux'){
-        executablePath = 'C:/Users/KinSae/Downloads/update.exe';
+        executablePath = userPath+'\\Downloads\\the-bible-update.exe';
     }else if(process.platform === 'win32'){
-        executablePath = 'C:\\Users\\KinSae\\Downloads\\ProxifierSetup.exe';
+        executablePath = userPath+'\\Downloads\\the-bible-update.exe';
     }
-    run(executablePath, function(err, data) {
-        if(err){
-        console.error(err);
-        return;
-        }
-    });
+    try{
+        exec('start '+executablePath);
+    }
+    catch (ex) {
+        console.log('exception: ', ex);
+    }
 }
 $(document).ready(function() {
     $('#btn-install').on('click',function(){
@@ -108,6 +91,7 @@ $(document).ready(function() {
     });
     $('#btn-later').on('click',function(){
         updater.style.display = 'none';
+        installUpdate();
     });
     $('#btn-restart').on('click',function(){
         installUpdate();

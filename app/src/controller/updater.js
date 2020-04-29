@@ -6,6 +6,8 @@ const { exec } = require('child_process');
 const $ = require('jquery');
 window.jQuery = window.$ = $;
 
+const userPath = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+
 var updater = document.getElementById('update');
 var installer = document.getElementById('d-complete');
 var downloading = document.getElementById('downloading');
@@ -40,7 +42,7 @@ async function downloadUpdate(){
     fetch(updateURL)
     .then(res=>{
         //check OS
-        const destPath = fs.createWriteStream("C:/Users/KinSae/Downloads/the-bible-update.exe");
+        const destPath = fs.createWriteStream(userPath+"\\Documents\\thebible\\the-bible-update.exe");
         res.body.pipe(destPath);
         // console.log(res.headers.get('content-length'));
         let _bytes = parseInt(res.headers.get('content-length'));
@@ -52,11 +54,17 @@ async function downloadUpdate(){
         })
     })
 }
+//make update directories
+function makeUpdateDirectory(){
+    const updateDir = userPath+"\\Documents\\thebible";
+    if (!fs.existsSync(updateDir)){
+        fs.mkdirSync(updateDir,{recursive:true}, err =>{});
+    }
+}
 //download progress in percentage
 let percentage=0;
 function showProgress(received, total){
     percentage = (received.toFixed(2) * 100) / total.toFixed(2);
-    // console.log(parseInt(percentage) + "% | " + received + " MB out of " + total + " MB.");
     dPercentage.innerText = " ("+parseInt(percentage)+"%)";
 
     if(received===total){
@@ -65,18 +73,24 @@ function showProgress(received, total){
     }
 }
 //exit and install update
+let isOpened = false;
 function installUpdate(){
     let executablePath ='';
-    const userPath = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
     if (process.platform === 'darwin') {
-        executablePath = userPath+'\\Downloads\\the-bible-update.exe';
+        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }else if(process.platform === 'linux'){
-        executablePath = userPath+'\\Downloads\\the-bible-update.exe';
+        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }else if(process.platform === 'win32'){
-        executablePath = userPath+'\\Downloads\\the-bible-update.exe';
+        executablePath = userPath+'\\Documents\\thebible\\the-bible-update_.exe';
     }
     try{
-        exec('start '+executablePath);
+        exec('start '+executablePath, (err, stdout, stderr) => {
+            isOpened = true;
+            if (err) {
+                console.error(err);
+                return;
+            }
+        });
     }
     catch (ex) {
         console.log('exception: ', ex);
@@ -87,15 +101,17 @@ $(document).ready(function() {
         updater.style.display = 'none';
         $('#downloading').css('display','flex').hide().fadeIn();
         progressDot();
+        makeUpdateDirectory();
         downloadUpdate();
     });
     $('#btn-later').on('click',function(){
         updater.style.display = 'none';
-        installUpdate();
     });
     $('#btn-restart').on('click',function(){
         installUpdate();
-        remote.app.quit();
+        if(isOpened){
+            remote.app.quit();
+        }
     });
 
 });

@@ -65,6 +65,13 @@ app.on('activate', () => {
         createWindow();
     }
 });
+// autoUpdater.setFeedURL({
+//     provider: 'github',
+//     repo: 'the-bible',
+//     owner: 'saw-jan',
+//     private: true,
+//     token: '8470bf6d0f4167849f4901060de66a49d32dc8f0'
+// });
 autoUpdater.autoDownload = false;
 autoUpdater.on('update-available',(updateInfo)=>{
     mainWindow.webContents.send('update-available',updateInfo);
@@ -86,6 +93,19 @@ function checkUpdateFiles(){
         fs.unlinkSync(updatePath);
     //file removed
     } catch(err) {
-        console.error('No update cache: '+err)
+        console.error('No update cache')
     }
 }
+// autoUpdater.on('update-downloaded', () => {
+//   mainWindow.webContents.send('update-downloaded');
+// });
+// ipcMain.on('install-update', () => {
+//   autoUpdater.downloadUpdate();
+// });
+// ipcMain.on('restart-and-update', () => {
+//   autoUpdater.quitAndInstall();
+// });
+// autoUpdater.on('download-progress', (progressObj) => {
+//     mainWindow.webContents.send('downloading',progressObj.percent);
+//     //console.log('downloading:'+progressObj.bytesPerSecond+', Percent: '+progressObj.percent);
+// })

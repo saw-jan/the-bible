@@ -13,7 +13,7 @@
         "git-push": "git push -u origin master",
         "rebuild": "electron-rebuild -f -w sqlite3",
         "deploy": "electron-builder build --win --publish always",
-        "build-all": "electron-builder build --mac --win"
+        "build-all": "electron-builder build --mac --win --lin"
     },
     "repository": {
         "type": "git",

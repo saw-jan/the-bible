@@ -81,7 +81,7 @@ function installUpdate(){
     }else if(process.platform === 'linux'){
         executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }else if(process.platform === 'win32'){
-        executablePath = userPath+'\\Documents\\thebible\\the-bible-update_.exe';
+        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }
     try{
         exec('start '+executablePath, (err, stdout, stderr) => {

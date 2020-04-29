@@ -9,6 +9,7 @@ const userPath = process.env.HOME || process.env.HOMEPATH || process.env.USERPRO
 let mainWindow;
 let loadingWindow;
 app.on('ready', () => {
+    makeUpdateDirectory();
     //createWindow();
     mainWindow = new BrowserWindow({
         width:950,
@@ -72,6 +73,13 @@ autoUpdater.on('update-available',(updateInfo)=>{
 autoUpdater.on('error', (err) => {
 mainWindow.webContents.send('error',err);
 });
+//initiate update directory
+function makeUpdateDirectory(){
+    const updateDir = userPath+"\\Documents\\thebible";
+    if (!fs.existsSync(updateDir)){
+        fs.mkdirSync(updateDir,{recursive:true}, err =>{});
+    }
+}
 //check if previous update files exist and delete them
 function checkUpdateFiles(){
     let updatePath = '';

@@ -19,3 +19,4 @@ document.getElementById('btn-min').addEventListener('click', () => {
 document.getElementById('btn-close').addEventListener('click', () => {
         remote.app.quit();
     })
+document.getElementById("app-version").innerText = "v"+remote.app.getVersion();

@@ -22,6 +22,15 @@ ipcRenderer.on('update-available', function(event,info) {
     $('#new-version').text(" v"+info.version);
     $('#update').css('display','flex').hide().fadeIn();
 });
+ipcRenderer.on('error', function(event,info) {
+    alert(info);
+});
+ipcRenderer.on('update-not-available', function() {
+    alert("no update");
+});
+ipcRenderer.on('checking-for-update', function() {
+    alert('checking');
+});
 function progressDot(){
     let count = 0;
     setInterval(function(){ 
@@ -38,11 +47,26 @@ function progressDot(){
 async function downloadUpdate(){
     var received_mb = 0;
     var total_mb = 0;
-    updateURL = "https://github.com/saw-jan/thebible-releases/releases/latest/download/the_bible_setup_v"+updateVersion+".exe";
+    let updateURL="";
+        if (process.platform === 'darwin') {
+            updateURL = "https://github.com/saw-jan/thebible-releases/releases/latest/download/the_bible_setup_v"+updateVersion+".dmg";
+        }else if(process.platform === 'linux'){
+            updateURL = "https://github.com/saw-jan/thebible-releases/releases/latest/download/the_bible_setup_v"+updateVersion+".deb";
+        }else if(process.platform === 'win32'){
+            updateURL = "https://github.com/saw-jan/thebible-releases/releases/latest/download/the_bible_setup_v"+updateVersion+".exe";
+        }
     fetch(updateURL)
     .then(res=>{
         //check OS
-        const destPath = fs.createWriteStream(userPath+"\\Documents\\thebible\\the-bible-update.exe");
+        let downloadDir = "";
+        if (process.platform === 'darwin') {
+            downloadDir = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        }else if(process.platform === 'linux'){
+            downloadDir = userPath+'/Documents/thebible/the-bible-update.exe';
+        }else if(process.platform === 'win32'){
+            downloadDir = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        }
+        const destPath = fs.createWriteStream(downloadDir);
         res.body.pipe(destPath);
         // console.log(res.headers.get('content-length'));
         let _bytes = parseInt(res.headers.get('content-length'));
@@ -56,7 +80,14 @@ async function downloadUpdate(){
 }
 //make update directories
 function makeUpdateDirectory(){
-    const updateDir = userPath+"\\Documents\\thebible";
+    let updateDir = "";
+    if (process.platform === 'darwin') {
+        updateDir = userPath+'\\Documents\\thebible';
+    }else if(process.platform === 'linux'){
+        updateDir = userPath+'/Documents/thebible';
+    }else if(process.platform === 'win32'){
+        updateDir = userPath+'\\Documents\\thebible';
+    }
     if (!fs.existsSync(updateDir)){
         fs.mkdirSync(updateDir,{recursive:true}, err =>{});
     }
@@ -79,21 +110,32 @@ function installUpdate(){
     if (process.platform === 'darwin') {
         executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }else if(process.platform === 'linux'){
-        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        executablePath = userPath+'/Documents/thebible/the-bible-update.deb';
+        try{
+            exec('gnome-terminal -- sh -c "sudo dpkg -i ~/Documents/the-bible-update.deb;sleep 10"', (err, stdout, stderr) => {
+                if (err) {
+                    console.error(err);
+                    //return;
+                }
+            });
+        }
+        catch (ex) {
+            console.log('exception: ', ex);
+        }
     }else if(process.platform === 'win32'){
         executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
-    }
-    try{
-        exec('start '+executablePath, (err, stdout, stderr) => {
-            isOpened = true;
-            if (err) {
-                console.error(err);
-                return;
-            }
-        });
-    }
-    catch (ex) {
-        console.log('exception: ', ex);
+        try{
+            exec('start '+executablePath, (err, stdout, stderr) => {
+                isOpened = true;
+                if (err) {
+                    // console.error(err);
+                    return;
+                }
+            });
+        }
+        catch (ex) {
+            // console.log('exception: ', ex);
+        }
     }
 }
 $(document).ready(function() {
@@ -106,6 +148,7 @@ $(document).ready(function() {
     });
     $('#btn-later').on('click',function(){
         updater.style.display = 'none';
+        // installUpdate();
     });
     $('#btn-restart').on('click',function(){
         installUpdate();

@@ -20,6 +20,7 @@ app.on('ready', () => {
         titleBarStyle: 'hidden',
         frame: false,
         show: false,
+        icon: path.join(__dirname, '/src/img/icon.png'),
         webPreferences: {
             nodeIntegration: true,
             devTools: true
@@ -35,6 +36,7 @@ app.on('ready', () => {
         height: 300,  
         frame: false, 
         alwaysOnTop: true,
+        icon: path.join(__dirname, '/src/img/icon.png'),
         webPreferences: {
             nodeIntegration: true,
             devTools: false
@@ -49,7 +51,10 @@ app.on('ready', () => {
         // autoUpdater.checkForUpdatesAndNotify();
     });
     checkUpdateFiles();
-    autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdates()
+    .catch(err=>{
+        
+    });
 });
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
@@ -71,11 +76,24 @@ autoUpdater.on('update-available',(updateInfo)=>{
     mainWindow.webContents.send('update-available',updateInfo);
 });
 autoUpdater.on('error', (err) => {
-mainWindow.webContents.send('error',err);
+    mainWindow.webContents.send('error',err);
+});
+autoUpdater.on('update-not-available', () => {
+    mainWindow.webContents.send('update-not-available');
+});
+autoUpdater.on('checking-for-update', () => {
+    mainWindow.webContents.send('checking-for-update');
 });
 //initiate update directory
 function makeUpdateDirectory(){
-    const updateDir = userPath+"\\Documents\\thebible";
+    let updateDir = "";
+    if (process.platform === 'darwin') {
+        updateDir = userPath+'\\Documents\\thebible';
+    }else if(process.platform === 'linux'){
+        updateDir = userPath+'/Documents/thebible';
+    }else if(process.platform === 'win32'){
+        updateDir = userPath+'\\Documents\\thebible';
+    }
     if (!fs.existsSync(updateDir)){
         fs.mkdirSync(updateDir,{recursive:true}, err =>{});
     }
@@ -86,12 +104,14 @@ function checkUpdateFiles(){
     if (process.platform === 'darwin') {
         updatePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }else if(process.platform === 'linux'){
-        updatePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        updatePath = userPath+'/Documents/thebible/the-bible-update.exe';
     }else if(process.platform === 'win32'){
         updatePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }
     try {
-        fs.unlinkSync(updatePath);
+        if (fs.existsSync(updatePath)){
+            fs.unlinkSync(updatePath);
+        }
     //file removed
     } catch(err) {
         console.error('No update cache: '+err)

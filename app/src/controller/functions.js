@@ -13,7 +13,7 @@ const user =  require(path.join(app.getAppPath(),'../','config','settings.json')
 let scriptureFont= user.scriptureFont;
 let supFont= user.supFont;
 //set bible version from setting file
-let dbBible = user.bibleVersion+".dll";
+let dbBible = user.bibleVersion.toLowerCase()+".dll";
 let bibleCode = user.bibleVersion;
 //function to set user's default setting
 function setDefault(bVersion, tFont,sFont){
@@ -44,6 +44,7 @@ let newBooks = document.getElementById('new-books');
 //connection to bible data file
 let dbPath = path.join(app.getAppPath(), '../', 'lib', dbBible);;
 let conn = db.connect(dbPath,'!25Z#Gcs','aes-256-ctr');
+
 
 function getCopyright(){
     let meta=[];
@@ -153,7 +154,7 @@ function loadBible(){
     chapterNumbers.innerHTML = "";
 
     allBooks.innerHTML='';
-    conn.runAsync("SELECT id,book_name FROM books",function(rows){
+    conn.runAsync("SELECT id,book_name FROM books",function(rows){        
         for (row of rows) {
             allBooks.innerHTML += '<li id="b' + row.id + '">' + row.book_name.toString() + '</li>';
         }
@@ -284,7 +285,7 @@ $(document).ready(function() {
     $('select.bible-version option[value='+bibleCode+']').attr('selected','selected');
     $("select.bible-version").change(function(){
         selValue = $(this).children("option:selected").val();
-        changeBible(selValue);
+        changeBible(selValue.toLowerCase());
         loadBible();
         
         if(selValue === 'NNRV' ){

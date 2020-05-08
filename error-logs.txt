@@ -1,0 +1,48 @@
+ERROR:
+    unknown output format set
+    github.com/develar/app-builder/pkg/icons.convertSingleFile
+            /Volumes/data/Documents/app-builder/pkg/icons/icon-converter.go:305
+SOLUTION:
+    user .png or .icns format for icons on linux build.
+    Add to linux build:
+        build: {
+            …
+            "linux": {
+                "icon": "build/256x256.icns",
+                "target": [
+                    "deb"
+                ]
+            }
+        }
+
+ERROR: icons not shown in linux dock
+SOLUTION: use 256x256.png and 256x256.icns in build folder
+        Usage in main.js;
+            win = ew BrowserWindow({
+                ...
+                icon: path.join(__dirname, '/src/img/256x256.png')
+                })
+        and in package.json;
+            build: {
+                …
+                "linux": {
+                    "icon": "build/256x256.icns",
+                    "target": [
+                        "deb"
+                    ]
+                }
+            }
+
+ERROR: Use Cipheriv for counter mode of aes-256-ctr
+SOLUITION: copy sqlite.js contents from sqlite-cipher github repo to node_modules/sqlite-cipher/sqlite.js
+
+ERROR: (node:88740) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated 
+        either by throwing inside of an async function without a catch block, or by rejecting a promise 
+        which was not handled with .catch(). (rejection id: 1)
+SOLUTION: use .catch() in .checkForUpdates() and .checkForUpdatesAndNotify() while calling updater
+            appUpdater.checkForUpdates().catch(err=>{})
+
+ERROR: GitHub Personal Access Token is not set, neither programmatically, nor using env "GH_TOKEN"
+SOLUTION: set environment variable
+        1. add in '/etc/environment' file: GH_TOKEN="your_token"
+        2. add in '.zshrc' file: export GH_TOKEN="your_token"

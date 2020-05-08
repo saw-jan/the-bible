@@ -1,19 +1,21 @@
 {
     "name": "thebible",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "description": "Just a simple bible reading application for desktop environment",
-    "author": "KinSae",
+    "author": "KinSae <me.kinsae@gmail.com>",
     "license": "MIT",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
         "pack": "electron-builder --dir",
+        "dist-lnx": "electron-builder --linux",
         "dist-win": "electron-builder -w",
+        "dist-mac": "electron-builder build --mac",
         "postinstall": "electron-builder install-app-deps",
         "git-push": "git push -u origin master",
         "rebuild": "electron-rebuild -f -w sqlite3",
-        "deploy": "electron-builder build --win --publish always",
-        "build-all": "electron-builder build --mac --win --lin"
+        "deploy": "electron-builder build --linux --publish always",
+        "build-all": "electron-builder build --mac --win --linux"
     },
     "repository": {
         "type": "git",
@@ -27,6 +29,28 @@
             "./lib/",
             "./config/"
         ],
+        "dmg": {
+            "contents": [
+                {
+                    "x": 110,
+                    "y": 150
+                },
+                {
+                    "x": 240,
+                    "y": 150,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
+        },
+        "linux": {
+            "artifactName": "the_bible_setup_v${version}.${ext}",
+            "executableName": "thebible",
+            "icon": "./build/icon.icns",
+            "target": [
+                "deb"
+            ]
+        },
         "win": {
             "target": "nsis",
             "icon": "build/icon.png",
@@ -68,7 +92,7 @@
     },
     "devDependencies": {
         "electron": "^8.0.0",
-        "electron-builder": "^22.5.1",
+        "electron-builder": "^22.6.0",
         "electron-rebuild": "^1.10.1"
     }
 }

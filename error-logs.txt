@@ -46,7 +46,7 @@ SOLUTION: use .catch() in .checkForUpdates() and .checkForUpdatesAndNotify() whi
 ERROR: GitHub Personal Access Token is not set, neither programmatically, nor using env "GH_TOKEN"
 SOLUTION: set environment variable
         1. add in '/etc/environment' file: GH_TOKEN="your_token"
-        2. add in '.zshrc' file: export GH_TOKEN="your_token"
+        2. add in '.bashrc' or '.zshrc' file: export GH_TOKEN="your_token"
 
 
 //WINDOWS

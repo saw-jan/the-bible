@@ -1,3 +1,4 @@
+//LINUX
 ERROR:
     unknown output format set
     github.com/develar/app-builder/pkg/icons.convertSingleFile
@@ -46,3 +47,6 @@ ERROR: GitHub Personal Access Token is not set, neither programmatically, nor us
 SOLUTION: set environment variable
         1. add in '/etc/environment' file: GH_TOKEN="your_token"
         2. add in '.zshrc' file: export GH_TOKEN="your_token"
+
+
+//WINDOWS

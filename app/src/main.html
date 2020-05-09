@@ -48,10 +48,7 @@
             <div class="bible-list">
                 <div class="select">
                     <select class="bible-version" id="slct">
-                        <option value="ESV">ESV</option>
-                        <option value="NNRV">NNRV</option>
-                        <option value="KJV">KJV</option>
-                        <option value="HIND">HIND</option>
+                        
                     </select>
                 </div>
                 <span class="set-default">Set as Default</span>
@@ -118,6 +115,7 @@
         </div>
     </div>
 <script>
+    require('./controller/dbLoader.js')
     require('./controller/functions.js')
     require('./controller/mainController.js')
     require('./controller/updater.js')

@@ -8,14 +8,15 @@
     "scripts": {
         "start": "electron .",
         "pack": "electron-builder --dir",
-        "dist-lnx": "electron-builder --linux",
-        "dist-win": "electron-builder -w",
-        "dist-mac": "electron-builder build --mac",
+        "dist-lnx": "electron-builder --linux --x64",
+        "dist-win": "electron-builder --win --x64",
+        "dist-mac": "electron-builder build --mac --x64",
         "postinstall": "electron-builder install-app-deps",
         "git-push": "git push -u origin master",
-        "rebuild": "electron-rebuild -f -w sqlite3",
-        "deploy": "electron-builder build --linux --publish always",
-        "build-all": "electron-builder build --mac --win --linux"
+        "deploy-lnx": "electron-builder build --linux --x64 --publish always",
+        "deploy-win": "electron-builder build --win --x64 --publish always",
+        "deploy-mac": "electron-builder build --mac --x64 --publish always",
+        "build-all": "electron-builder build --wml --x64"
     },
     "repository": {
         "type": "git",
@@ -48,6 +49,7 @@
             "executableName": "thebible",
             "icon": "./build/icon.icns",
             "target": [
+                "AppImage",
                 "deb"
             ]
         },
@@ -85,10 +87,8 @@
     "dependencies": {
         "electron-updater": "^4.2.5",
         "jquery": "^3.4.1",
-        "knex": "^0.20.10",
         "node-fetch": "^2.6.0",
-        "sqlite-cipher": "^0.3.6",
-        "sqlite3": "^4.1.1"
+        "sqlite-cipher": "^0.3.6"
     },
     "devDependencies": {
         "electron": "^8.0.0",

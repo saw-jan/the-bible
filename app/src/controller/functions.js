@@ -53,8 +53,8 @@ function getCopyright(){
             meta.push(row.value);
         }
         $('#copyright-scripture').text('');
-        $('#copyright-scripture').text('Scripture Text © '+meta[2]);
-        $('.which-bible').text(meta[2]+' ('+meta[1]+')');
+        $('#copyright-scripture').text('Scripture Text © '+meta[3]);
+        $('.which-bible').text(meta[2]);
     });
 }
 //initial bible books load on startup
@@ -202,7 +202,7 @@ function changeBible(newBible){
 
 function isNep(number){
     let selValue = $('select.bible-version').children("option:selected").val();
-    if(selValue=='NNRV'){
+    if(selValue=='nnrv'){
         let numArr = number.toString().split('');
         let nepNum = '';
         for (let i = 0; i < numArr.length; i++) {
@@ -282,30 +282,21 @@ $(document).ready(function() {
     });
     //bible language select
     let selValue='';
-    $('select.bible-version option[value='+bibleCode+']').attr('selected','selected');
     $("select.bible-version").change(function(){
         selValue = $(this).children("option:selected").val();
         changeBible(selValue.toLowerCase());
         loadBible();
         
-        if(selValue === 'NNRV' ){
+        if(selValue === 'nnrv' ){
             $('#old-testament').text('पुरानाे करार');
             $('#new-testament').text('नयाँ करार');
             $('.chapter .header').text('अध्याय');
             $('.verse .header').text('पद');
-            // $('.which-bible').text('Nepali New Revised Version (NNRV)');
         }else{
             $('#old-testament').text('Old Testament');
             $('#new-testament').text('New Testament');
             $('.chapter .header').text('Chapter');
             $('.verse .header').text('Verse');
-        }
-        if(selValue === 'KJV'){
-            // $('.which-bible').text('King James Version (KJV)');
-        }else if(selValue === 'ESV'){
-            // $('.which-bible').text('English Standard Version (ESV)');
-        }else if(selValue === 'HIND'){
-            // $('.which-bible').text('Hindi Holy Bible (HIND)');
         }
     });
     //show selected book chapter numbers
@@ -366,7 +357,7 @@ $(document).ready(function() {
         const curVersion = $("select.bible-version").children("option:selected").val();
         setDefault(curVersion,scriptureFont,supFont);
         $('.notification').css('display','flex').hide().fadeIn();
-        $('#n-text').text("'"+curVersion+"' Set as Default");
+        $('#n-text').text("'"+curVersion.toUpperCase()+"' Set as Default");
         setTimeout(function(){
             $('.notification').fadeOut();
         }, 3000)

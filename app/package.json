@@ -8,15 +8,15 @@
     "scripts": {
         "start": "electron .",
         "pack": "electron-builder --dir",
-        "dist-lnx": "electron-builder --linux --x64",
+        "dist-lnx": "electron-builder --linux",
         "dist-win": "electron-builder --win --x64",
-        "dist-mac": "electron-builder build --mac --x64",
+        "dist-mac": "electron-builder --mac",
         "postinstall": "electron-builder install-app-deps",
         "git-push": "git push -u origin master",
-        "deploy-lnx": "electron-builder build --linux --x64 --publish always",
+        "deploy-lnx": "electron-builder build --linux --publish always",
         "deploy-win": "electron-builder build --win --x64 --publish always",
-        "deploy-mac": "electron-builder build --mac --x64 --publish always",
-        "build-all": "electron-builder build --wml --x64"
+        "deploy-mac": "electron-builder build --mac --publish always",
+        "build-all": "electron-builder build --wml"
     },
     "repository": {
         "type": "git",
@@ -45,6 +45,7 @@
             ]
         },
         "linux": {
+            "category":"Education",
             "artifactName": "the_bible_setup_v${version}.${ext}",
             "executableName": "thebible",
             "icon": "./build/icon.icns",

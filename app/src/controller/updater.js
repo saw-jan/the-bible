@@ -22,15 +22,17 @@ ipcRenderer.on('update-available', function(event,info) {
     $('#new-version').text(" v"+info.version);
     $('#update').css('display','flex').hide().fadeIn();
 });
-ipcRenderer.on('error', function(event,info) {
-    alert(info);
-});
-ipcRenderer.on('update-not-available', function() {
-    alert("no update");
-});
-ipcRenderer.on('checking-for-update', function() {
-    alert('checking');
-});
+if (process.platform === 'darwin') {
+    ipcRenderer.on('error', function(event,info) {
+        alert(info);
+    });
+    ipcRenderer.on('update-not-available', function() {
+        alert("no update");
+    });
+    ipcRenderer.on('checking-for-update', function() {
+        alert('checking');
+    });
+}
 function progressDot(){
     let count = 0;
     setInterval(function(){ 
@@ -104,7 +106,6 @@ function showProgress(received, total){
     }
 }
 //exit and install update
-let isOpened = false;
 function installUpdate(){
     let executablePath ='';
     if (process.platform === 'darwin') {
@@ -115,27 +116,21 @@ function installUpdate(){
             exec('gnome-terminal -- sh -c "sudo dpkg -i '+executablePath+';sleep 10"', (err, stdout, stderr) => {
                 if (err) {
                     console.error(err);
-                    //return;
-                }
-            });
-        }
-        catch (ex) {
-            console.log('exception: ', ex);
-        }
-    }else if(process.platform === 'win32'){
-        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
-        try{
-            exec('start '+executablePath, (err, stdout, stderr) => {
-                isOpened = true;
-                if (err) {
-                    // console.error(err);
                     return;
                 }
             });
         }
-        catch (ex) {
-            // console.log('exception: ', ex);
+        catch (ex) {}
+    }else if(process.platform === 'win32'){
+        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        try{
+            exec('start '+executablePath, (err, stdout, stderr) => {
+                if (err) {
+                    return;
+                }
+            });
         }
+        catch (ex) {}
     }
 }
 $(document).ready(function() {
@@ -148,13 +143,12 @@ $(document).ready(function() {
     });
     $('#btn-later').on('click',function(){
         updater.style.display = 'none';
-        // installUpdate();
     });
     $('#btn-restart').on('click',function(){
-        installUpdate();
-        if(isOpened){
+        setTimeout(function(){
             remote.app.quit();
-        }
+        }, 2000)
+        installUpdate();
     });
 
 });

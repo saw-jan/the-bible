@@ -4,7 +4,6 @@ const process = require('process');
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
-const isDev = require('electron-is-dev');
 const userPath = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
 
 let mainWindow;

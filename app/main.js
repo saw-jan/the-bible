@@ -95,8 +95,16 @@ function checkLinuxUpdate(){
         let ymlText = '';
         res.body.on('data',(chunk)=>{
             ymlText = chunk.toString('utf8');
-            vText = ymlText.split('\n');
-            version = vText[0].split(':')[1].trim();
+            let vText = ymlText.split('\n');
+            let version='';
+            if(vText[0]!='Not Found'){
+                console.log('Found');
+                
+                version = vText[0].split(':')[1].trim();
+            }else{
+                console.log("no file");
+                version = curVersion
+            }
             if(curVersion != version){
                 let updateVer = {'version':version};
                 mainWindow.webContents.send('update-available',updateVer);

@@ -1,4 +1,4 @@
-var sqlite = require('sqlite-cipher');
+var sqlite = require('./sqlite-cipher');
 const fs = require('fs');
 const path = require('path');
 sqlite.iv = "kinsae";

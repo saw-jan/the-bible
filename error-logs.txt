@@ -48,5 +48,8 @@ SOLUTION: set environment variable
         1. add in '/etc/environment' file: GH_TOKEN="your_token"
         2. add in '.bashrc' or '.zshrc' file: export GH_TOKEN="your_token"
 
+ERROR: Need executable 'ar' to convert dir to deb ~
+SOLUTION: install utilities for linux
+           sudo apt install binutils -y
 
 //WINDOWS

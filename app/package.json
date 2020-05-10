@@ -45,12 +45,11 @@
             ]
         },
         "linux": {
-            "category":"Education",
+            "category": "Education",
             "artifactName": "the_bible_setup_v${version}.${ext}",
             "executableName": "thebible",
             "icon": "./build/icon.icns",
             "target": [
-                "AppImage",
                 "deb"
             ]
         },
@@ -94,6 +93,7 @@
     "devDependencies": {
         "electron": "^8.0.0",
         "electron-builder": "^22.6.0",
+        "electron-is-dev": "^1.2.0",
         "electron-rebuild": "^1.10.1"
     }
 }

@@ -42,9 +42,8 @@ let allBooks = document.getElementById('all-books');
 let oldBooks = document.getElementById('old-books');
 let newBooks = document.getElementById('new-books');
 //connection to bible data file
-let dbPath = path.join(app.getAppPath(), '../', 'lib', dbBible);;
+let dbPath = path.join(app.getAppPath(), '../', 'lib', dbBible);
 let conn = db.connect(dbPath,'!25Z#Gcs','aes-256-ctr');
-
 
 function getCopyright(){
     let meta=[];

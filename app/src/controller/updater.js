@@ -60,9 +60,9 @@ async function downloadUpdate(){
         //check OS
         let downloadDir = "";
         if (process.platform === 'darwin') {
-            downloadDir = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+            downloadDir = userPath+'/Documents/thebible/the-bible-update.dmg';
         }else if(process.platform === 'linux'){
-            downloadDir = userPath+'/Documents/thebible/the-bible-update.exe';
+            downloadDir = userPath+'/Documents/thebible/the-bible-update.deb';
         }else if(process.platform === 'win32'){
             downloadDir = userPath+'\\Documents\\thebible\\the-bible-update.exe';
         }
@@ -82,7 +82,7 @@ async function downloadUpdate(){
 function makeUpdateDirectory(){
     let updateDir = "";
     if (process.platform === 'darwin') {
-        updateDir = userPath+'\\Documents\\thebible';
+        updateDir = userPath+'/Documents/thebible';
     }else if(process.platform === 'linux'){
         updateDir = userPath+'/Documents/thebible';
     }else if(process.platform === 'win32'){
@@ -108,11 +108,11 @@ let isOpened = false;
 function installUpdate(){
     let executablePath ='';
     if (process.platform === 'darwin') {
-        executablePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        executablePath = userPath+'/Documents/thebible/the-bible-update.dmg';
     }else if(process.platform === 'linux'){
         executablePath = userPath+'/Documents/thebible/the-bible-update.deb';
         try{
-            exec('gnome-terminal -- sh -c "sudo dpkg -i ~/Documents/the-bible-update.deb;sleep 10"', (err, stdout, stderr) => {
+            exec('gnome-terminal -- sh -c "sudo dpkg -i '+executablePath+';sleep 10"', (err, stdout, stderr) => {
                 if (err) {
                     console.error(err);
                     //return;

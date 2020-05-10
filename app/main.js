@@ -3,7 +3,8 @@ const { autoUpdater } = require('electron-updater');
 const process = require('process');
 const fs = require('fs');
 const path = require('path');
-
+const fetch = require('node-fetch');
+const isDev = require('electron-is-dev');
 const userPath = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
 
 let mainWindow;
@@ -51,10 +52,13 @@ app.on('ready', () => {
         // autoUpdater.checkForUpdatesAndNotify();
     });
     checkUpdateFiles();
-    autoUpdater.checkForUpdates()
-    .catch(err=>{
-        
-    });
+    if (process.platform === 'darwin' || process.platform === 'win32') {
+        autoUpdater.checkForUpdates()
+        .catch(err=>{});
+    }else if(process.platform === 'linux'){
+        checkLinuxUpdate();
+    }
+    
 });
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
@@ -84,11 +88,29 @@ autoUpdater.on('update-not-available', () => {
 autoUpdater.on('checking-for-update', () => {
     mainWindow.webContents.send('checking-for-update');
 });
+//check update for linux OS
+function checkLinuxUpdate(){
+    curVersion = app.getVersion();
+    fetch('https://github.com/saw-jan/thebible-releases/releases/latest/download/latest.yml')
+    .then(res=>{
+        let ymlText = '';
+        res.body.on('data',(chunk)=>{
+            ymlText = chunk.toString('utf8');
+            vText = ymlText.split('\n');
+            version = vText[0].split(':')[1].trim();
+            if(curVersion != version){
+                let updateVer = {'version':version};
+                mainWindow.webContents.send('update-available',updateVer);
+            }
+        })
+    })
+    .catch(err=>{})
+}
 //initiate update directory
 function makeUpdateDirectory(){
     let updateDir = "";
     if (process.platform === 'darwin') {
-        updateDir = userPath+'\\Documents\\thebible';
+        updateDir = userPath+'/Documents/thebible';
     }else if(process.platform === 'linux'){
         updateDir = userPath+'/Documents/thebible';
     }else if(process.platform === 'win32'){
@@ -102,9 +124,9 @@ function makeUpdateDirectory(){
 function checkUpdateFiles(){
     let updatePath = '';
     if (process.platform === 'darwin') {
-        updatePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
+        updatePath = userPath+'/Documents/thebible/the-bible-update.dmg';
     }else if(process.platform === 'linux'){
-        updatePath = userPath+'/Documents/thebible/the-bible-update.exe';
+        updatePath = userPath+'/Documents/thebible/the-bible-update.deb';
     }else if(process.platform === 'win32'){
         updatePath = userPath+'\\Documents\\thebible\\the-bible-update.exe';
     }

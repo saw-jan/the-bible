@@ -8,14 +8,22 @@ html,body{
     height:300px;
     user-select: none;
 }
+#appVersion{
+    position: absolute;
+    z-index: 1;
+    left:48%;
+    top:67%;
+    font-size: 14px;
+    color:#EEE;
+}
 .loader {
     position: absolute;
     z-index: 1;
-    left:46%;
-    top:72%;
+    left:46.5%;
+    top:74%;
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    border-top: 5px solid #39db34;
+    border-top: 5px solid #FFF;
     width: 40px;
     height: 40px;
     -webkit-animation: spin 2s linear infinite; /* Safari */

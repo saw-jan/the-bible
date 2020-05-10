@@ -102,7 +102,7 @@ function checkLinuxUpdate(){
                 let updateVer = {'version':version};
                 mainWindow.webContents.send('update-available',updateVer);
             }
-        })
+        }).catch(err=>{})
     })
     .catch(err=>{})
 }

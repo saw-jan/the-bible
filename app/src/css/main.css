@@ -13,6 +13,8 @@
     --gray-color: #333333;
     --gray-light-color: #f4f4f4;
     --dim-text-color: #AAA;
+    --bg-color1: #fffbf8;
+    --bg-color2: #fff6ee;
 }
 
 html,
@@ -60,9 +62,9 @@ body {
     opacity:.5;
 }
 .container {
-    width: auto;
-    height: 100%;
+    height: 100vh;
     display: grid;
+    overflow: auto;
     grid-template-rows: 30px auto 30px;
 }
 
@@ -70,6 +72,11 @@ body {
 .window-tab {
     -webkit-user-select: none;
     -webkit-app-region: drag;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 30px;
     background-color: var(--primary-color);
     display: grid;
     grid-template-columns: 260px auto 140px;
@@ -137,8 +144,7 @@ body {
     background-color: red;
 }
 #btn-max{
-    opacity: 0.2;
-    cursor: default;
+    cursor: pointer;
 }
 /* bible selection panel */
 .wrap-it{
@@ -146,6 +152,10 @@ body {
     grid-auto-rows: 50px auto;
 }
 .bible-list{
+    position: fixed;
+    top: 30px;
+    left: 0;
+    right: 0;
     display: flex;
     align-items: center;
     padding: 5px;
@@ -220,10 +230,15 @@ select {
   }
 /* content panel */
 .window-panel {
+    position: fixed;
+    top: 71px;
+    left: 0;
+    right: 0;
+    bottom: 30px;
     display: grid;
     grid-template-columns: 200px 150px auto;
-    height: 100px;
     width: 100%;
+    height: 100%;
 }
 /* selected book style */
 .active-book {
@@ -233,13 +248,17 @@ select {
 /* selected chapter and verse style */
 .active-c-v {
     background-color: var(--accent-gold);
-    border: solid 0.5px #eee;
+    border: solid 0.5px #fff;
 }
 /* Testament types styles */
 .left-panel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 101px;
+    width: 200px;
     background-color: var(--white-color);
     display: grid;
-    height: 100%;
     grid-template-rows: 40px auto;
     user-select: none;
 }
@@ -294,20 +313,35 @@ select {
     border-left: solid 1px var(--primary-extralight-color);
 }
 .wrap-book-list{
+    position: absolute;
+    left: 0;
+    top: 40px;
+    right: 0;
+    bottom: 0;
+    width: 200px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 .book-list {
-    display: flex;
-    overflow: auto;
-    height: 72vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding-top: 10px;
     font-size: 14px;
     color: var(--gray-color);
 }
-.more{ 
+.more{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 15px;
     display: flex;
-    font-size: 24px;
+    font-size: 19px;
     line-height: 0em;
     font-weight: bold;
     color: #AAA;
@@ -317,10 +351,12 @@ select {
 
 .book-list ul {
     width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .book-list::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
 }
 
 .book-list::-webkit-scrollbar-track {
@@ -354,6 +390,11 @@ select {
 }
 /* chapter and verse style */
 .mid-panel {
+    position: absolute;
+    left: 200px;
+    top: 0;
+    bottom: 101px;
+    width: 150px;
     user-select: none;
     display: flex;
     flex-direction: row;
@@ -379,7 +420,29 @@ select {
     color: var(--secondary-color);
     border-right: solid 1px #444;
 }
-.num-more{
+.ch-num-more{
+    position: absolute;
+    left: 0;
+    top: 40px;
+    right: 75px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+.ch-num-more #wrap-scroll-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    overflow-y: auto;
+}
+.vr-num-more{
+    position: absolute;
+    left: 75px;
+    top: 40px;
+    right: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
 }
@@ -388,12 +451,17 @@ select {
     display: grid;
     grid-template-rows: 40px auto;
     text-align: center;
-    background-color: #ebebeb;
+    background-color: var(--bg-color2);
 }
 
-/* #wrap-scroll-item {
-    height: 72vh;
-} */
+.vr-num-more #wrap-scroll-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    overflow-y: auto;
+}
 
 .chapter-numbers {
     display: grid;
@@ -401,19 +469,17 @@ select {
     justify-content: space-evenly;
     font-size: 12px;
     grid-template-columns: 1fr 1fr;
-    overflow: auto;
-    height: 73.5vh;
 }
 
-.chapter-numbers::-webkit-scrollbar {
+#wrap-scroll-item::-webkit-scrollbar {
     width: 3px;
 }
 
-.chapter-numbers::-webkit-scrollbar-track {
+#wrap-scroll-item::-webkit-scrollbar-track {
     border-radius: 0px;
 }
 
-.chapter-numbers::-webkit-scrollbar-thumb {
+#wrap-scroll-item::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: var(--accent-green);
 }
@@ -433,7 +499,7 @@ select {
     display: grid;
     grid-template-rows: 40px 80%;
     text-align: center;
-    background-color: #f4f4f4;
+    background-color: var(--bg-color1);
 }
 
 .verse-numbers {
@@ -442,8 +508,6 @@ select {
     justify-content: space-evenly;
     font-size: 12px;
     grid-template-columns: 1fr 1fr;
-    overflow: auto;
-    height: 73.5vh;
 }
 
 .verse-numbers::-webkit-scrollbar {
@@ -470,13 +534,21 @@ select {
 }
 /* css for right grid panel */
 .right-panel {
+    position: absolute;
+    left: 350px;
+    right: 100vw;
     width: 100%;
+    height: 100%;
     background-color: #FFF;
     display: grid;
     grid-template-rows: 40px auto;
 }
 /* selected book, chapter and verse */
 .chap-index{
+    position: absolute;
+    left: 0;
+    right: 350px;
+    height: 40px;
     display: flex;
     align-items: center;
     background-color: var(--primary-light-color);
@@ -518,7 +590,12 @@ select {
 }
 /* scripture text styles */
 #div-scripture {
-    height: 72vh;
+    position: absolute;
+    top: 40px;
+    right: 350px;
+    left: 0;
+    bottom: 101px;
+    overflow: hidden;
 }
 JQ{
     color:red;
@@ -528,7 +605,6 @@ F{
     font-style: italic;
 }
 sup {
-    /* font-size:10px;  */
     vertical-align:super;
 }
 .intend-txt t {
@@ -539,13 +615,15 @@ sup {
     background: var(--accent-lightgreen);
 }
 .scripture {
-    margin: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     background-color: var(--white-color);
-    overflow: auto;
-    height: 100%;
-    width: auto;
-    margin-top: 10px;
-    margin-right: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 20px;
 }
 
 .scripture::-webkit-scrollbar {
@@ -564,7 +642,6 @@ sup {
 .scripture p {
     margin-bottom: 10px;
     line-height: 1.5em;
-    /* font-size: 17px; */
 }
 
 .vNum {
@@ -573,6 +650,11 @@ sup {
 }
 /* css for footer */
 .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -584,14 +666,3 @@ sup {
 #copyright-scripture{
     user-select: none;
 }
-/* @media only screen and (max-width: 950px){
-    .book-list{
-        height:100vh;
-    }
-    .chapter-numbers{
-        height:100vh;
-    }
-    .verse-numbers{
-        height:100vh;
-    }
-} */

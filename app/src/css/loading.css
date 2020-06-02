@@ -1,6 +1,7 @@
 html,body{
     margin:0px;
     padding:0px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .loading-page{
     background: url(../img/loadingpage.jpg);
@@ -19,13 +20,13 @@ html,body{
 .loader {
     position: absolute;
     z-index: 1;
-    left:46.5%;
-    top:74%;
+    left:48.5%;
+    top:76%;
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     border-top: 5px solid #FFF;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }

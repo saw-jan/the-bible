@@ -10,20 +10,19 @@ let mainWindow;
 let loadingWindow;
 app.on('ready', () => {
     makeUpdateDirectory();
-    //createWindow();
     mainWindow = new BrowserWindow({
         width:950,
         height:630,
         minWidth: 950,
         minHeight: 630,
-        resizable: false,
+        resizable: true,
         titleBarStyle: 'hidden',
         frame: false,
         show: false,
         icon: path.join(__dirname, '/src/img/icon.png'),
         webPreferences: {
             nodeIntegration: true,
-            devTools: true
+            devTools: false
         }
     });
     mainWindow.loadFile('src/main.html');
@@ -48,7 +47,6 @@ app.on('ready', () => {
     mainWindow.once('ready-to-show', () => {
         loadingWindow.destroy();
         mainWindow.show();
-        // autoUpdater.checkForUpdatesAndNotify();
     });
     checkUpdateFiles();
     if (process.platform === 'darwin' || process.platform === 'win32') {

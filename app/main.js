@@ -25,6 +25,7 @@ app.on('ready', () => {
             devTools: false
         }
     });
+    mainWindow.setMenu(null);
     mainWindow.loadFile('src/main.html');
     mainWindow.on('closed', () => {
         mainWindow = null

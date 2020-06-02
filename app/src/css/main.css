@@ -69,6 +69,19 @@ body {
 }
 
 /* title bar styles */
+.mac-tab{
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 30px;
+    background-color: var(--primary-color);
+    display: grid;
+    grid-template-columns: 260px auto;
+    display: none;
+}
 .window-tab {
     -webkit-user-select: none;
     -webkit-app-region: drag;
@@ -115,8 +128,9 @@ body {
     font-size: 12px;
 }
 
-/* toolbox styles */
-.toolbox {
+/* toolbox windows */
+.toolbox-win {
+    display: flex;
     -webkit-app-region: no-drag;
     display: flex;
     align-items: center;
@@ -124,11 +138,11 @@ body {
     color: #EEE;
 }
 
-.toolbox img {
+.toolbox-win img {
     width: 13px;
 }
 
-.toolbox span {
+.toolbox-win span {
     width: 100%;
     height: 100%;
     display: flex;
@@ -136,16 +150,50 @@ body {
     align-items: center;
 }
 
-.toolbox span:hover {
+.toolbox-win span:hover {
     background-color: #525f77;
 }
 
-.toolbox .exit:hover {
+.toolbox-win .exit:hover {
     background-color: red;
 }
-#btn-max{
-    cursor: pointer;
+
+/* toolbox linux */
+.toolbox-linux{
+    display: flex;
+    -webkit-app-region: no-drag;
+    align-items: center;
+    justify-content: space-evenly;
+    color: #EEE;
+    margin-left: 15px;
+    padding: 6px;
 }
+.toolbox-linux img {
+    width: 8px;
+}
+
+.toolbox-linux span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+    border-radius: 50px;
+}
+
+.toolbox-linux span:hover {
+    background-color: #525f77;
+}
+
+.toolbox-linux .exit {
+    margin-right: 10px;
+    background-color: rgb(228, 70, 7);
+}
+.toolbox-linux .exit:hover {
+    background-color: rgb(228, 70, 7);
+}
+
 /* bible selection panel */
 .wrap-it{
     display: grid;

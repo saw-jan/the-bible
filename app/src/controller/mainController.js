@@ -4,12 +4,12 @@ const $ = require('jquery');
 window.jQuery = window.$ = $;
 
 //minimize window
-document.getElementById('btn-min').addEventListener('click', () => {
+$('#btn-min').click(() => {
         remote.getCurrentWindow().minimize();
     })
 //min-max window
 let max = false;
-document.getElementById('btn-max').addEventListener('click', () => {
+$('#btn-max').click(() => {
         max = !max;
         max ? $('#btn-max img').attr('src', path.join(__dirname, '../img/maxmin.png')) : $('#btn-max img').attr('src', path.join(__dirname, '../img/max.png'));
 
@@ -17,7 +17,7 @@ document.getElementById('btn-max').addEventListener('click', () => {
         window.setFullScreen(!window.isFullScreen());
     })
 //close window
-document.getElementById('btn-close').addEventListener('click', () => {
+$('#btn-close').click(() => {
         remote.app.quit();
     })
 document.getElementById("app-version").innerText = "v"+remote.app.getVersion();

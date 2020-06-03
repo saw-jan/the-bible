@@ -1,138 +1,131 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>The Bible</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/updater.css">
-</head>
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/updater.css" />
+  </head>
 
-<body>
+  <body>
     <!-- notification box -->
     <div class="notification">
-        <span id="n-text">Set as Default</span><span id="n-close"><img src="./img/x.png"/></span>
+      <span id="n-text">Set as Default</span><span id="n-close"><img src="./img/x.png" /></span>
     </div>
     <div class="update" id="update">
-        <span>Update Available <span id="new-version"></span></span>
-        <div class="buttons">
-            <input type="button" value="Install" id="btn-install">
-            <input type="button" value="Later" id="btn-later">
-        </div>
+      <span>Update Available <span id="new-version"></span></span>
+      <div class="buttons">
+        <input type="button" value="Install" id="btn-install" />
+        <input type="button" value="Later" id="btn-later" />
+      </div>
     </div>
     <div class="downloading" id="downloading">
-        <span>Downloading Updates <span id="progress-dot"></span><span id="d-percentage"></span></span>
+      <span>Downloading Updates <span id="progress-dot"></span><span id="d-percentage"></span></span>
     </div>
     <div class="dError" id="dError">
-        <span>Download Error!</span>
+      <span>Download Error!</span>
     </div>
     <div class="d-complete" id="d-complete">
-        <span>Restart & Install Update</span>
-        <div class="buttons">
-            <input type="button" value="Update Now" id="btn-restart">
-        </div>
+      <span>Restart & Install Update</span>
+      <div class="buttons">
+        <input type="button" value="Update Now" id="btn-restart" />
+      </div>
     </div>
     <div class="container">
-        <!-- Title bar -->
-        <div class="window-tab">
-            <div class="window-title"><span><img src="./img/ico-the-bible.png" draggable="false"></span><span id="title">The Bible</span><span id="dim-line">/ Comparative Bible Study</span></div>
-            <div class="bible-v-name"><span class="which-bible"></span></div>
-            <!-- windows toolbox -->
-            <!-- <div class="toolbox-win">
+      <!-- Title bar -->
+      <div class="window-tab">
+        <div class="window-title">
+          <span><img src="./img/ico-the-bible.png" draggable="false" /></span><span id="title">The Bible</span
+          ><span id="dim-line">/ Comparative Bible Study</span>
+        </div>
+        <div class="bible-v-name"><span class="which-bible"></span></div>
+        <!-- windows toolbox -->
+        <!-- <div class="toolbox-win">
                 <span id="btn-min"><img src="./img/min.png" draggable="false" /></span>
                 <span id="btn-max"><img src="./img/max.png" draggable="false" /></span>
                 <span class="exit" id="btn-close"><img src="./img/close.png" draggable="false" /></span>
             </div> -->
-            <!-- linux toolbox -->
-            <div class="toolbox-linux">
-                <span id="btn-min"><img src="./img/min.png" draggable="false" /></span>
-                <span id="btn-max"><img src="./img/max.png" draggable="false" /></span>
-                <span class="exit" id="btn-close"><img src="./img/close.png" draggable="false" /></span>
-            </div>
+        <!-- linux toolbox -->
+        <div class="toolbox-linux">
+          <span id="btn-min"><img src="./img/min.png" draggable="false" /></span>
+          <span id="btn-max"><img src="./img/max.png" draggable="false" /></span>
+          <span class="exit" id="btn-close"><img src="./img/close.png" draggable="false" /></span>
         </div>
-        <!-- mac toolbar -->
-        <!-- <div class="mac-tab">
+      </div>
+      <!-- mac toolbar -->
+      <!-- <div class="mac-tab">
             <div class="window-title"><span id="title">The Bible</span><span id="dim-line">/ Comparative Bible Study</span></div>
             <div class="bible-v-name"><span class="which-bible"></span></div>
         </div> -->
-        <div class="wrap-it">
-            <div class="bible-list">
-                <div class="select">
-                    <select class="bible-version" id="slct">
-                        
-                    </select>
-                </div>
-                <span class="set-default">Set as Default</span>
-            </div>
-            <div class="window-panel">
-                <div class="left-panel">
-                    <div class="testament-type">
-                        <span class="all-testament" id="all-testament">All</span>
-                        <span class="old-testament" id="old-testament">Old Testament</span>
-                        <span class="new-testament" id="new-testament">New Testament</span>
-                    </div>
-                    <div class="wrap-book-list">
-                        <div class="book-list">
-                            <ul class="all-books" id="all-books">
-    
-                            </ul>
-                            <ul class="old-books" id="old-books">
-    
-                            </ul>
-                            <ul class="new-books" id="new-books">
-    
-                            </ul>
-                        </div>
-                        <span class="more">...</span>
-                    </div>
-                    
-                </div>
-                <div class="mid-panel">
-                    <div class="chapter">
-                        <span class="header">Chapter</span>
-                        <div class="ch-num-more">
-                            <div id="wrap-scroll-item">
-                                <div class="chapter-numbers" id="chapter-numbers">
-                                </div>
-                            </div>
-                            <span class="more">...</span>
-                        </div>
-                    </div>
-                    <div class="verse">
-                        <span class="header">Verse</span>
-                        <div class="vr-num-more">
-                            <div id="wrap-scroll-item">
-                                <div class="verse-numbers" id="verse-numbers">
-                                </div>
-                            </div>
-                            <span class="more">...</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-panel">
-                    <div class="chap-index">
-                        <span id="b-c-v"></span>
-                        <div class="magnify"><span id="m-plus"><img draggable="false" src="img/m+.png" width="10"/></span><span id="m-minus"><img draggable="false" src="img/m-.png" width="10"/></span></div>
-                    </div>
-                    <div id="div-scripture">
-                        <div class="scripture" id="scriptures"></div>
-                    </div>
-                </div>
-            </div>
+      <div class="wrap-it">
+        <div class="bible-list">
+          <div class="select">
+            <select class="bible-version" id="slct"> </select>
+          </div>
+          <span class="set-default">Set as Default</span>
         </div>
-        <div class="footer">
-            <span id="app-version"></span>
-            <span id="copyright-scripture"></span>
+        <div class="window-panel">
+          <div class="left-panel">
+            <div class="testament-type">
+              <span class="all-testament" id="all-testament">All</span>
+              <span class="old-testament" id="old-testament">Old Testament</span>
+              <span class="new-testament" id="new-testament">New Testament</span>
+            </div>
+            <div class="wrap-book-list">
+              <div class="book-list">
+                <ul class="all-books" id="all-books"></ul>
+                <ul class="old-books" id="old-books"></ul>
+                <ul class="new-books" id="new-books"></ul>
+              </div>
+              <span class="more">...</span>
+            </div>
+          </div>
+          <div class="mid-panel">
+            <div class="chapter">
+              <span class="header">Chapter</span>
+              <div class="ch-num-more">
+                <div id="wrap-scroll-item">
+                  <div class="chapter-numbers" id="chapter-numbers"></div>
+                </div>
+                <span class="more">...</span>
+              </div>
+            </div>
+            <div class="verse">
+              <span class="header">Verse</span>
+              <div class="vr-num-more">
+                <div id="wrap-scroll-item">
+                  <div class="verse-numbers" id="verse-numbers"></div>
+                </div>
+                <span class="more">...</span>
+              </div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="chap-index">
+              <span id="b-c-v"></span>
+              <div class="magnify">
+                <span id="m-plus"><img draggable="false" src="img/m+.png" width="10" /></span
+                ><span id="m-minus"><img draggable="false" src="img/m-.png" width="10" /></span>
+              </div>
+            </div>
+            <div id="div-scripture">
+              <div class="scripture" id="scriptures"></div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="footer">
+        <span id="app-version"></span>
+        <span id="copyright-scripture"></span>
+      </div>
     </div>
-<script>
-    require('./controller/dbLoader.js')
-    require('./controller/functions.js')
-    require('./controller/mainController.js')
-    require('./controller/updater.js')
-</script>
-</body>
-
+    <script>
+      require("./controller/dbLoader.js");
+      require("./controller/functions.js");
+      require("./controller/mainController.js");
+      require("./controller/updater.js");
+    </script>
+  </body>
 </html>

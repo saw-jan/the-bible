@@ -1,98 +1,98 @@
 {
-    "name": "thebible",
-    "version": "2.3.0",
-    "description": "Just a simple bible reading application for desktop environment",
-    "author": "KinSae <me.kinsae@gmail.com>",
-    "license": "MIT",
-    "main": "main.js",
-    "scripts": {
-        "start": "electron .",
-        "pack": "electron-builder --dir",
-        "dist-lnx": "electron-builder --linux",
-        "dist-win": "electron-builder --win --x64",
-        "dist-mac": "electron-builder --mac",
-        "postinstall": "electron-builder install-app-deps",
-        "git-push": "git push -u origin master",
-        "deploy-lnx": "electron-builder build --linux --publish always",
-        "deploy-win": "electron-builder build --win --x64 --publish always",
-        "deploy-mac": "electron-builder build --mac --publish always",
-        "build-all": "electron-builder build --wml"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/saw-jan/the-bible.git"
-    },
-    "build": {
-        "asar": true,
-        "appId": "com.kinsae.thebible",
-        "productName": "TheBible",
-        "extraResources": [
-            "./lib/",
-            "./config/"
-        ],
-        "dmg": {
-            "contents": [
-                {
-                    "x": 110,
-                    "y": 150
-                },
-                {
-                    "x": 240,
-                    "y": 150,
-                    "type": "link",
-                    "path": "/Applications"
-                }
-            ]
+  "name": "thebible",
+  "version": "2.2.12",
+  "description": "Just a simple bible reading application for desktop environment",
+  "author": "KinSae <me.kinsae@gmail.com>",
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist-lnx": "electron-builder --linux",
+    "dist-win": "electron-builder --win --x64",
+    "dist-mac": "electron-builder --mac",
+    "postinstall": "electron-builder install-app-deps",
+    "git-push": "git push -u origin master",
+    "deploy-lnx": "electron-builder build --linux --publish always",
+    "deploy-win": "electron-builder build --win --x64 --publish always",
+    "deploy-mac": "electron-builder build --mac --publish always",
+    "build-all": "electron-builder build --wml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saw-jan/the-bible.git"
+  },
+  "build": {
+    "asar": true,
+    "appId": "com.kinsae.thebible",
+    "productName": "TheBible",
+    "extraResources": [
+      "./lib/",
+      "./config/"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
         },
-        "linux": {
-            "category": "Education",
-            "artifactName": "the_bible_setup_v${version}.${ext}",
-            "executableName": "thebible",
-            "icon": "./build/icon.icns",
-            "target": [
-                "deb"
-            ]
-        },
-        "win": {
-            "target": "nsis",
-            "icon": "build/icon.png",
-            "requestedExecutionLevel": "highestAvailable",
-            "publisherName": "KinSae"
-        },
-        "nsis": {
-            "artifactName": "the_bible_setup_v${version}.${ext}",
-            "oneClick": false,
-            "perMachine": true,
-            "allowToChangeInstallationDirectory": true,
-            "installerIcon": "build/installerIcon.ico",
-            "uninstallerIcon": "build/uninstallerIcon.ico",
-            "installerSidebar": "build/installerSidebar.bmp",
-            "uninstallerSidebar": "build/uninstallerSidebar.bmp",
-            "deleteAppDataOnUninstall": true,
-            "createStartMenuShortcut": true,
-            "include": "build/installer.nsh",
-            "allowElevation": true,
-            "differentialPackage": true,
-            "runAfterFinish": true,
-            "shortcutName": "The Bible"
-        },
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "saw-jan",
-                "repo": "thebible-releases"
-            }
-        ]
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
-    "dependencies": {
-        "electron-updater": "^4.2.5",
-        "jquery": "^3.4.1",
-        "node-fetch": "^2.6.0",
-        "sqlite-cipher": "^0.3.6"
+    "linux": {
+      "category": "Education",
+      "artifactName": "the_bible_setup_v${version}.${ext}",
+      "executableName": "thebible",
+      "icon": "./build/icon.icns",
+      "target": [
+        "deb"
+      ]
     },
-    "devDependencies": {
-        "electron": "^8.0.0",
-        "electron-builder": "^22.6.0",
-        "electron-rebuild": "^1.10.1"
-    }
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png",
+      "requestedExecutionLevel": "highestAvailable",
+      "publisherName": "KinSae"
+    },
+    "nsis": {
+      "artifactName": "the_bible_setup_v${version}.${ext}",
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/installerIcon.ico",
+      "uninstallerIcon": "build/uninstallerIcon.ico",
+      "installerSidebar": "build/installerSidebar.bmp",
+      "uninstallerSidebar": "build/uninstallerSidebar.bmp",
+      "deleteAppDataOnUninstall": true,
+      "createStartMenuShortcut": true,
+      "include": "build/installer.nsh",
+      "allowElevation": true,
+      "differentialPackage": true,
+      "runAfterFinish": true,
+      "shortcutName": "The Bible"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "saw-jan",
+        "repo": "thebible-releases"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^4.2.5",
+    "jquery": "^3.4.1",
+    "node-fetch": "^2.6.0",
+    "sqlite-cipher": "^0.3.6"
+  },
+  "devDependencies": {
+    "electron": "^8.0.0",
+    "electron-builder": "^22.6.0",
+    "electron-rebuild": "^1.10.1"
+  }
 }

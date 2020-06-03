@@ -1,716 +1,716 @@
 /* color variables */
 :root {
-    --primary-color: #262a35;
-    --primary-light-color: #30323f;
-    --primary-extralight-color: #454757;
-    --secondary-color: #f2f7f7;
-    --accent-green: #92dfb4;
-    --accent-lightgreen: #cbf0db;
-    --accent-darkgreen: #2a964e;
-    --accent-gold: gold;
-    --accent-dim-gold: #857744;
-    --white-color: #FFFFFF;
-    --gray-color: #333333;
-    --gray-light-color: #f4f4f4;
-    --dim-text-color: #AAA;
-    --bg-color1: #fffbf8;
-    --bg-color2: #fff6ee;
+  --primary-color: #262a35;
+  --primary-light-color: #30323f;
+  --primary-extralight-color: #454757;
+  --secondary-color: #f2f7f7;
+  --accent-green: #92dfb4;
+  --accent-lightgreen: #cbf0db;
+  --accent-darkgreen: #2a964e;
+  --accent-gold: gold;
+  --accent-dim-gold: #857744;
+  --white-color: #ffffff;
+  --gray-color: #333333;
+  --gray-light-color: #f4f4f4;
+  --dim-text-color: #aaa;
+  --bg-color1: #f5f5f5;
+  --bg-color2: #eeeeee;
 }
 
 html,
 body {
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.notification{
-    width:200px;
-    height:20px;
-    background-color: var(--primary-light-color);
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 3px;
-    position: absolute;
-    z-index: 1;
-    left:76%;
-    top:88%;
-    opacity:.9;
-    display: none;
+.notification {
+  width: 200px;
+  height: 20px;
+  background-color: var(--primary-light-color);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  left: 76%;
+  top: 88%;
+  opacity: 0.9;
+  display: none;
 }
-#n-text{
-    flex:10;
-    font-size: 14px;
-    color:#eee;
-    margin-left: 10px;
-    letter-spacing: .8px;
-    user-select: none;
+#n-text {
+  flex: 10;
+  font-size: 14px;
+  color: #eee;
+  margin-left: 10px;
+  letter-spacing: 0.8px;
+  user-select: none;
 }
-#n-close{
-    flex:1;
-    text-align: center;
-    cursor: pointer;
-    opacity:.8;
+#n-close {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.8;
 }
-#n-close img{
-    width:15px;
+#n-close img {
+  width: 15px;
 }
-.notification #n-close:hover{
-    opacity:.5;
+.notification #n-close:hover {
+  opacity: 0.5;
 }
 .container {
-    height: 100vh;
-    display: grid;
-    overflow: auto;
-    grid-template-rows: 30px auto 30px;
+  height: 100vh;
+  display: grid;
+  overflow: auto;
+  grid-template-rows: 30px auto 30px;
 }
 
 /* title bar styles */
-.mac-tab{
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 30px;
-    background-color: var(--primary-color);
-    display: grid;
-    grid-template-columns: 260px auto;
-    display: none;
+.mac-tab {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 30px;
+  background-color: var(--primary-color);
+  display: grid;
+  grid-template-columns: 260px auto;
+  display: none;
 }
 .window-tab {
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 30px;
-    background-color: var(--primary-color);
-    display: grid;
-    grid-template-columns: 260px auto 140px;
-    cursor: pointer;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 30px;
+  background-color: var(--primary-color);
+  display: grid;
+  grid-template-columns: 260px auto 140px;
+  cursor: pointer;
 }
 
 .window-title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-left: 12px;
-    color: var(--secondary-color);
-    font-size: 14px;
-    cursor: default;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 12px;
+  color: var(--secondary-color);
+  font-size: 14px;
+  cursor: default;
 }
-#dim-line{
-    font-size: 11px;
-    color: #888;
-    margin-left: 10px;
+#dim-line {
+  font-size: 11px;
+  color: #888;
+  margin-left: 10px;
 }
 .window-title img {
-    height: 25px;
-    width: 25px;
-    margin-right: 15px;
+  height: 25px;
+  width: 25px;
+  margin-right: 15px;
 }
-#app-version{
-    color:#888;
-    font-size: 10px;
-    margin-left: 15px;
+#app-version {
+  color: #888;
+  font-size: 10px;
+  margin-left: 15px;
 }
-.bible-v-name{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color:#DDD;
-    font-size: 12px;
+.bible-v-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ddd;
+  font-size: 12px;
 }
 
 /* toolbox windows */
 .toolbox-win {
-    display: flex;
-    -webkit-app-region: no-drag;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    color: #EEE;
+  display: flex;
+  -webkit-app-region: no-drag;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #eee;
 }
 
 .toolbox-win img {
-    width: 13px;
+  width: 13px;
 }
 
 .toolbox-win span {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .toolbox-win span:hover {
-    background-color: #525f77;
+  background-color: #525f77;
 }
 
 .toolbox-win .exit:hover {
-    background-color: red;
+  background-color: red;
 }
 
 /* toolbox linux */
-.toolbox-linux{
-    display: flex;
-    -webkit-app-region: no-drag;
-    align-items: center;
-    justify-content: space-evenly;
-    color: #EEE;
-    margin-left: 15px;
-    padding: 6px;
+.toolbox-linux {
+  display: flex;
+  -webkit-app-region: no-drag;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #eee;
+  margin-left: 15px;
+  padding: 6px;
 }
 .toolbox-linux img {
-    width: 8px;
+  width: 8px;
 }
 
 .toolbox-linux span {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 15px;
-    border-radius: 50px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  border-radius: 50px;
 }
 
 .toolbox-linux span:hover {
-    background-color: #525f77;
+  background-color: #525f77;
 }
 
 .toolbox-linux .exit {
-    margin-right: 10px;
-    background-color: rgb(228, 70, 7);
+  margin-right: 10px;
+  background-color: rgb(228, 70, 7);
 }
 .toolbox-linux .exit:hover {
-    background-color: rgb(228, 70, 7);
+  background-color: rgb(228, 70, 7);
 }
 
 /* bible selection panel */
-.wrap-it{
-    display: grid;
-    grid-auto-rows: 50px auto;
+.wrap-it {
+  display: grid;
+  grid-auto-rows: 50px auto;
 }
-.bible-list{
-    position: fixed;
-    top: 30px;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    background-color: var(--primary-light-color);
-    border-bottom: 1px solid #444;
+.bible-list {
+  position: fixed;
+  top: 30px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: var(--primary-light-color);
+  border-bottom: 1px solid #444;
 }
 select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    outline: 0;
-    box-shadow: none;
-    border: 0 !important;
-    background: var(--primary-color);
-    background-image: none;
-  }
-  .select {
-    position: relative;
-    display: flex;
-    width: 208px;
-    height: 30px;
-    line-height: 2;
-    background: var(--primary-color);
-    overflow: hidden;
-    border-radius: .25em;
-    margin-left: 10px;
-  }
-  select {
-    flex: 1;
-    padding: 0 .5em;
-    color: #DDD;
-    cursor: pointer;
-    margin-left: 5px;
-  }
-  /* Arrow */
-  .select::after {
-    content: '\25BC';
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 3px;
-    cursor: pointer;
-    color: #AAA;
-    border-left: solid 2px var(--primary-light-color);;
-    pointer-events: none;
-    -webkit-transition: .25s all ease;
-    -o-transition: .25s all ease;
-    transition: .25s all ease;
-  }
-  /* Transition */
-  .select:hover::after {
-    color: var(--white-color);
-  }
-  .select option{
-      width: 10px;
-  }
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: var(--primary-color);
+  background-image: none;
+}
+.select {
+  position: relative;
+  display: flex;
+  width: 208px;
+  height: 30px;
+  line-height: 2;
+  background: var(--primary-color);
+  overflow: hidden;
+  border-radius: 0.25em;
+  margin-left: 10px;
+}
+select {
+  flex: 1;
+  padding: 0 0.5em;
+  color: #ddd;
+  cursor: pointer;
+  margin-left: 5px;
+}
+/* Arrow */
+.select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 3px;
+  cursor: pointer;
+  color: #aaa;
+  border-left: solid 2px var(--primary-light-color);
+  pointer-events: none;
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: var(--white-color);
+}
+.select option {
+  width: 10px;
+}
 
-.set-default{
-    margin-left: 10px;
-    font-size: 10px;
-    color: #888;
-    padding:5px 15px 5px 15px;
-    border-radius: 20px;
-    border:solid 1px #666;
-    cursor: pointer;
-    user-select: none;
-  }
-  .set-default:hover{
-    color: #BBB;
-    border:solid 1px #BBB;
-  }
+.set-default {
+  margin-left: 10px;
+  font-size: 10px;
+  color: #888;
+  padding: 5px 15px 5px 15px;
+  border-radius: 20px;
+  border: solid 1px #666;
+  cursor: pointer;
+  user-select: none;
+}
+.set-default:hover {
+  color: #bbb;
+  border: solid 1px #bbb;
+}
 /* content panel */
 .window-panel {
-    position: fixed;
-    top: 71px;
-    left: 0;
-    right: 0;
-    bottom: 30px;
-    display: grid;
-    grid-template-columns: 200px 150px auto;
-    width: 100%;
-    height: 100%;
+  position: fixed;
+  top: 71px;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  display: grid;
+  grid-template-columns: 200px 150px auto;
+  width: 100%;
+  height: 100%;
 }
 /* selected book style */
 .active-book {
-    background-color: #e1ffee;
-    border-left: solid 6px var(--accent-darkgreen);
+  background-color: #e1ffee;
+  border-left: solid 6px var(--accent-darkgreen);
 }
 /* selected chapter and verse style */
 .active-c-v {
-    background-color: var(--accent-gold);
-    border: solid 0.5px #fff;
+  background-color: var(--accent-gold);
+  border: solid 0.5px #fff;
 }
 /* Testament types styles */
 .left-panel {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 101px;
-    width: 200px;
-    background-color: var(--white-color);
-    display: grid;
-    grid-template-rows: 40px auto;
-    user-select: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 101px;
+  width: 200px;
+  background-color: var(--white-color);
+  display: grid;
+  grid-template-rows: 40px auto;
+  user-select: none;
 }
 
 .testament-type {
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-    justify-content: space-evenly;
-    font-size: 12px;
-    font-weight: bold;
-    color: #EEE;
-    letter-spacing: .05em;
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 12px;
+  font-weight: bold;
+  color: #eee;
+  letter-spacing: 0.05em;
 }
-.all-testament{
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-left: 8px;
-    padding-right: 8px;
-    cursor: pointer;
-    color: #EEE;
-    background-color: var(--accent-darkgreen);
+.all-testament {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  color: #eee;
+  background-color: var(--accent-darkgreen);
 }
 .old-testament {
-    width: 100%;
-    background-color: var(--primary-light-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-left: 8px;
-    padding-right: 8px;
-    cursor: pointer;
-    font-size: 11px;
-    border-left: solid 1px var(--primary-extralight-color);
+  width: 100%;
+  background-color: var(--primary-light-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  border-left: solid 1px var(--primary-extralight-color);
 }
 
 .new-testament {
-    width: 100%;
-    background-color: var(--primary-light-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-left: 8px;
-    padding-right: 8px;
-    cursor: pointer;
-    font-size: 11px;
-    border-left: solid 1px var(--primary-extralight-color);
+  width: 100%;
+  background-color: var(--primary-light-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  border-left: solid 1px var(--primary-extralight-color);
 }
-.wrap-book-list{
-    position: absolute;
-    left: 0;
-    top: 40px;
-    right: 0;
-    bottom: 0;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+.wrap-book-list {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 .book-list {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-top: 10px;
-    font-size: 14px;
-    color: var(--gray-color);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 10px;
+  font-size: 14px;
+  color: var(--gray-color);
 }
-.more{
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 15px;
-    display: flex;
-    font-size: 19px;
-    line-height: 0em;
-    font-weight: bold;
-    color: #AAA;
-    justify-content: center;
-    width: 100%;
+.more {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 15px;
+  display: flex;
+  font-size: 19px;
+  line-height: 0em;
+  font-weight: bold;
+  color: #aaa;
+  justify-content: center;
+  width: 100%;
 }
 
 .book-list ul {
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .book-list::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 .book-list::-webkit-scrollbar-track {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 .book-list::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: var(--accent-green);
+  border-radius: 10px;
+  background-color: var(--accent-green);
 }
 
 .book-list ul li {
-    padding: 10px 5px 10px 20px;
-    border-bottom: solid 1px #EEEE;
+  padding: 10px 5px 10px 20px;
+  border-bottom: solid 1px #eeee;
 }
 
 .book-list ul li:hover {
-    background-color: #e1ffee;
-    cursor: pointer;
+  background-color: #e1ffee;
+  cursor: pointer;
 }
-.all-books{
-    display: block;
+.all-books {
+  display: block;
 }
 
 .old-books {
-    display: none;
+  display: none;
 }
 
 .new-books {
-    display: none;
+  display: none;
 }
 /* chapter and verse style */
 .mid-panel {
-    position: absolute;
-    left: 200px;
-    top: 0;
-    bottom: 101px;
-    width: 150px;
-    user-select: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  position: absolute;
+  left: 200px;
+  top: 0;
+  bottom: 101px;
+  width: 150px;
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .mid-panel .header {
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    letter-spacing: .08em;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.08em;
 }
 
 .chapter .header {
-    background-color: var(--primary-light-color);
-    color: var(--secondary-color);
-    border-left: solid 1px #444;
+  background-color: var(--primary-light-color);
+  color: var(--secondary-color);
+  border-left: solid 1px #444;
 }
 
 .verse .header {
-    background-color: var(--primary-light-color);
-    color: var(--secondary-color);
-    border-right: solid 1px #444;
+  background-color: var(--primary-light-color);
+  color: var(--secondary-color);
+  border-right: solid 1px #444;
 }
-.ch-num-more{
-    position: absolute;
-    left: 0;
-    top: 40px;
-    right: 75px;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
+.ch-num-more {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  right: 75px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 .ch-num-more #wrap-scroll-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 20px;
-    overflow-y: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  overflow-y: auto;
 }
-.vr-num-more{
-    position: absolute;
-    left: 75px;
-    top: 40px;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
+.vr-num-more {
+  position: absolute;
+  left: 75px;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 .chapter {
-    width: 100%;
-    display: grid;
-    grid-template-rows: 40px auto;
-    text-align: center;
-    background-color: var(--bg-color2);
+  width: 100%;
+  display: grid;
+  grid-template-rows: 40px auto;
+  text-align: center;
+  background-color: var(--bg-color2);
 }
 
 .vr-num-more #wrap-scroll-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 20px;
-    overflow-y: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  overflow-y: auto;
 }
 
 .chapter-numbers {
-    display: grid;
-    align-content: flex-start;
-    justify-content: space-evenly;
-    font-size: 12px;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  align-content: flex-start;
+  justify-content: space-evenly;
+  font-size: 12px;
+  grid-template-columns: 1fr 1fr;
 }
 
 #wrap-scroll-item::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 #wrap-scroll-item::-webkit-scrollbar-track {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 #wrap-scroll-item::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: var(--accent-green);
+  border-radius: 10px;
+  background-color: var(--accent-green);
 }
 
 .chapter-numbers span {
-    color: var(--primary-color);
-    padding: 5px 5px 5px 5px;
-    cursor: pointer;
+  color: var(--primary-color);
+  padding: 5px 5px 5px 5px;
+  cursor: pointer;
 }
 
 .chapter-numbers span:hover {
-    background-color: var(--accent-lightgreen);
+  background-color: var(--accent-lightgreen);
 }
 
 .verse {
-    width: 100%;
-    display: grid;
-    grid-template-rows: 40px 80%;
-    text-align: center;
-    background-color: var(--bg-color1);
+  width: 100%;
+  display: grid;
+  grid-template-rows: 40px 80%;
+  text-align: center;
+  background-color: var(--bg-color1);
 }
 
 .verse-numbers {
-    display: grid;
-    align-content: flex-start;
-    justify-content: space-evenly;
-    font-size: 12px;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  align-content: flex-start;
+  justify-content: space-evenly;
+  font-size: 12px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .verse-numbers::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 .verse-numbers::-webkit-scrollbar-track {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 .verse-numbers::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: var(--accent-green);
+  border-radius: 10px;
+  background-color: var(--accent-green);
 }
 
 .verse-numbers span {
-    color: var(--primary-light-color);
-    padding: 5px 5px 5px 5px;
-    cursor: pointer;
+  color: var(--primary-light-color);
+  padding: 5px 5px 5px 5px;
+  cursor: pointer;
 }
 
 .verse-numbers span:hover {
-    background-color: var(--accent-lightgreen);
+  background-color: var(--accent-lightgreen);
 }
 /* css for right grid panel */
 .right-panel {
-    position: absolute;
-    left: 350px;
-    right: 100vw;
-    width: 100%;
-    height: 100%;
-    background-color: #FFF;
-    display: grid;
-    grid-template-rows: 40px auto;
+  position: absolute;
+  left: 350px;
+  right: 100vw;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: grid;
+  grid-template-rows: 40px auto;
 }
 /* selected book, chapter and verse */
-.chap-index{
-    position: absolute;
-    left: 0;
-    right: 350px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    background-color: var(--primary-light-color);
+.chap-index {
+  position: absolute;
+  left: 0;
+  right: 350px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-light-color);
 }
 #b-c-v {
-    flex: 6;
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--accent-gold);
-    display: flex;
-    justify-content: center;
-    user-select: none;
+  flex: 6;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--accent-gold);
+  display: flex;
+  justify-content: center;
+  user-select: none;
 }
 
-.magnify{
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin-right: 10px;
+.magnify {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 10px;
 }
-.magnify span{
-    text-align: center;
-    width: 14px;
-    font-size: 14px;
-    padding: 4px;
-    margin-right: 5px;
-    background-color: var(--primary-light-color);
-    border: 1px solid #444;
-    border-radius: 20px;
-    cursor: pointer;
-    user-select: none;
-    color: var(--accent-darkgreen);
+.magnify span {
+  text-align: center;
+  width: 14px;
+  font-size: 14px;
+  padding: 4px;
+  margin-right: 5px;
+  background-color: var(--primary-light-color);
+  border: 1px solid #444;
+  border-radius: 20px;
+  cursor: pointer;
+  user-select: none;
+  color: var(--accent-darkgreen);
 }
-.magnify span img{
-    width:10px;
-    opacity: 0.8;
+.magnify span img {
+  width: 10px;
+  opacity: 0.8;
 }
 /* scripture text styles */
 #div-scripture {
-    position: absolute;
-    top: 40px;
-    right: 350px;
-    left: 0;
-    bottom: 101px;
-    overflow: hidden;
+  position: absolute;
+  top: 40px;
+  right: 350px;
+  left: 0;
+  bottom: 101px;
+  overflow: hidden;
 }
-JQ{
-    color:red;
+JQ {
+  color: red;
 }
-F{
-    color:#888;
-    font-style: italic;
+F {
+  color: #888;
+  font-style: italic;
 }
 sup {
-    vertical-align:super;
+  vertical-align: super;
 }
 .intend-txt t {
-    margin-left: 10px;
-    font-style: italic;
+  margin-left: 10px;
+  font-style: italic;
 }
-::selection{
-    background: var(--accent-lightgreen);
+::selection {
+  background: var(--accent-lightgreen);
 }
 .scripture {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: var(--white-color);
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: var(--white-color);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 20px;
 }
 
 .scripture::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .scripture::-webkit-scrollbar-track {
-    border-radius: 0px;
+  border-radius: 0px;
 }
 
 .scripture::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: var(--accent-green);
+  border-radius: 10px;
+  background-color: var(--accent-green);
 }
 
 .scripture p {
-    margin-bottom: 10px;
-    line-height: 1.5em;
+  margin-bottom: 10px;
+  line-height: 1.5em;
 }
 
 .vNum {
-    font-weight: bold;
-    font-size: 14px;
+  font-weight: bold;
+  font-size: 14px;
 }
 /* css for footer */
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 20px;
-    background-color: var(--primary-color);
-    color: var(--accent-dim-gold);
-    font-size: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 20px;
+  background-color: var(--primary-color);
+  color: var(--accent-dim-gold);
+  font-size: 10px;
 }
-#copyright-scripture{
-    user-select: none;
+#copyright-scripture {
+  user-select: none;
 }

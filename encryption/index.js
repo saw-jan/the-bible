@@ -4,14 +4,29 @@ const path = require('path');
 
 sqlite.iv = 'kinsae';
 // encryption / decryption password
-const pass = '!25Z#Gcs';
+const secret = '!25Z#Gcs';
 
 // path to encrypted database
 const dbFilePath = path.join(__dirname, '../', 'lib');
 const innerDbFilePath = path.join(__dirname, '../', 'app', 'lib');
 
-// short names for databases
-const dbs = ['ESV', 'KJV', 'NNRV', 'HIND', 'NKJV'];
+// get all database from database folder
+function readFiles() {
+  const databaseFolder = __dirname + '/database';
+  var dbArray = [];
+  if (fs.existsSync(databaseFolder)) {
+    // read folder contents and loop though each file or folder in an array
+    fs.readdirSync(databaseFolder).forEach(function (db) {
+      let dbFullPath = databaseFolder + '/' + db;
+
+      // check if current element is a folder
+      if (!fs.lstatSync(dbFullPath).isDirectory()) {
+        dbArray.push(dbFullPath);
+      }
+    });
+  }
+  return dbArray;
+}
 
 // deletes database folders from given paths
 function deleteFolderRecursive(libPath) {
@@ -45,14 +60,17 @@ function makeLibFolder(libPath) {
 
 //
 function encryptDB(libPath) {
+  const dbs = readFiles();
   dbs.forEach(function (db) {
+    var db_name = (function () {
+      var arr = db.split('/');
+      var full_name = arr[arr.length - 1];
+      full_name = full_name.replace('.sqlite', '');
+      full_name = full_name.replace('.db', '');
+      return full_name.toLowerCase();
+    })();
     // encrypt sqlite database
-    sqlite.encrypt(
-      __dirname + '/database/' + db + '.sqlite',
-      libPath + '/' + db.toLowerCase() + '.dll',
-      pass,
-      'aes-256-ctr'
-    );
+    sqlite.encrypt(db, libPath + '/' + db_name + '.dll', secret, 'aes-256-ctr');
   });
 }
 

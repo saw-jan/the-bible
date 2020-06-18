@@ -1,8 +1,12 @@
 var sqlite = require('./sqlite-cipher');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const IV_LENGTH = 16; // For AES, this is always 16
 
-sqlite.iv = 'kinsae';
+// Initialization vector.
+let IV = crypto.randomBytes(IV_LENGTH);
+sqlite.iv = IV;
 // encryption / decryption password
 const secret = '!25Z#Gcs';
 

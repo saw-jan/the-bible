@@ -1,9 +1,10 @@
 {
-  "name": "database-encryption",
+  "name": "sqlite-database-encryption",
   "version": "1.0.0",
-  "description": "",
+  "description": "A sqlite database encryption module using sqlite-cipher.",
   "main": "index.js",
   "scripts": {
+    "encrypt": "node index.js",
     "start": "node index.js"
   },
   "keywords": [],
